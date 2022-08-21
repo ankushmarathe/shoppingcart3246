@@ -1,4 +1,4 @@
-package com.profile.controller;
+package com.profile.api.controller;
 
 import java.util.List;
 

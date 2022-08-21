@@ -1,4 +1,4 @@
-package com.profile.model;
+package com.profile.api.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -85,3 +85,4 @@ public class User {
 	
 
 }
+

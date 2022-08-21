@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.profile.model.User;
-import com.profile.repository.UserRepository;
+import com.profile.api.model.User;
+import com.profile.api.repository.UserRepository;
 
 @RestController
 public class UserController {

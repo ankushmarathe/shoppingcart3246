@@ -21,6 +21,8 @@ public class UserController {
 	@Autowired
 	private UserRepository  userRepository;
 	
+	
+	//add new user 
 	@PostMapping("/user")
 	public User adduser( @RequestBody User user) {
 		
@@ -28,17 +30,20 @@ public class UserController {
 		return userRepository.save(user);
 	}
 	
+	//get  all users
 	@GetMapping("/user")
 	public List<User> getAllStaff(){
 		
 		return userRepository.findAll();
 	}
 	
+	//delete user using user ID
 	@DeleteMapping("/user/{uid}")		
 	public void deleteStaff(@PathVariable("uid") Long uid) {
 		userRepository.deleteById(uid);
 		}
 	
+	//update user according to user ID
 	@PutMapping("/user/update/{uid}")
 	public User updateUser(@PathVariable("uid") Long uid, @RequestBody User Newuser) {
 		

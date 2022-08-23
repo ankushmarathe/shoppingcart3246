@@ -31,15 +31,15 @@ public class UserController {
 	}
 	
 	//get  all users
-	@GetMapping("/user")
-	public List<User> getAllStaff(){
+	@GetMapping("/R")
+	public List<User> getAllUser(){
 		
 		return userRepository.findAll();
 	}
 	
 	//delete user using user ID
 	@DeleteMapping("/user/{uid}")		
-	public void deleteStaff(@PathVariable("uid") Long uid) {
+	public void deleteUser(@PathVariable("uid") Long uid) {
 		userRepository.deleteById(uid);
 		}
 	

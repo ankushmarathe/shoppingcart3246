@@ -12,7 +12,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-     private Long userId;
+     private int userId;
 	@Column(nullable = false)
 	private String Name;
 	@Column(nullable = false)
@@ -20,68 +20,88 @@ public class User {
 	@Column(nullable = false)
 	private String role;
 	
-	private Long mobile;
+	private String mobile;
 	
 	private int age;
 	
-	@Column(nullable = false)
+ @Column(nullable = false)
 	private String email;
 
-	public Long getUserId() {
-		return userId;
-	}
+public User(int userId, String name, String address, String role, String mobile, int age, String email) {
+	this.userId = userId;
+	this.Name = name;
+	this.Address = address;
+	this.role = role;
+	this.mobile = mobile;
+	this.age = age;
+	this.email = email;
+}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
 
-	public String getName() {
-		return Name;
-	}
+public User() {
+	super();
+	// TODO Auto-generated constructor stub
+}
 
-	public void setName(String name) {
-		Name = name;
-	}
 
-	public String getAddress() {
-		return Address;
-	}
 
-	public void setAddress(String address) {
-		Address = address;
-	}
 
-	public String getRole() {
-		return role;
-	}
+public int getUserId() {
+	return userId;
+}
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+public void setUserId(int userId) {
+	this.userId = userId;
+}
 
-	public Long getMobile() {
-		return mobile;
-	}
+public String getName() {
+	return Name;
+}
 
-	public void setMobile(Long mobile) {
-		this.mobile = mobile;
-	}
+public void setName(String name) {
+	Name = name;
+}
 
-	public int getAge() {
-		return age;
-	}
+public String getAddress() {
+	return Address;
+}
 
-	public void setAge(int age) {
-		this.age = age;
-	}
+public void setAddress(String address) {
+	Address = address;
+}
 
-	public String getEmail() {
-		return email;
-	}
+public String getRole() {
+	return role;
+}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+public void setRole(String role) {
+	this.role = role;
+}
+
+public String getMobile() {
+	return mobile;
+}
+
+public void setMobile(String mobile) {
+	this.mobile = mobile;
+}
+
+public int getAge() {
+	return age;
+}
+
+public void setAge(int age) {
+	this.age = age;
+}
+
+public String getEmail() {
+	return email;
+}
+
+public void setEmail(String email) {
+	this.email = email;
+}
+
 	
 
 }

@@ -16,13 +16,14 @@ import com.wallet.api.model.Wallet;
 import com.wallet.api.repository.WalletRepository;
 
 @RestController
+@RequestMapping("/wallet")
 public class WalletController {
 
 	@Autowired
 	WalletRepository walletRepository;
 
 
-	@GetMapping("/walletS")// get the list of all wallets
+	@GetMapping("/allWallets")// get the list of all wallets
 	public List<Wallet> getWallet() {
 		return walletRepository.findAll();
 	}
@@ -33,12 +34,12 @@ public class WalletController {
 	}
 	
 	
-	@PostMapping("/wallet")// post the wallet
+	@PostMapping("/saveWallet")// post the wallet
 	public Wallet postWallet(@RequestBody Wallet wallet) {
 		return walletRepository.save(wallet);
 	}
 	
-	@PutMapping("/wallet/{wId}")// edit the existent wallet
+	@PutMapping("/editWallet/{wId}")// edit the existent wallet
 	public Wallet putWallet(@PathVariable("wId") Long wId, @RequestBody Wallet wallet) {
 		Wallet wallet1=walletRepository.getById(wId);
 		
@@ -47,7 +48,7 @@ public class WalletController {
 		return walletRepository.save(wallet1);
 	}
 	
-	@DeleteMapping("/wallet/{wId}")// delete the existent wallet
+	@DeleteMapping("/deleteWallet/{wId}")// delete the existent wallet
 	public List<Wallet> deleteWallet(@PathVariable("wId") Long wId){
 		Wallet wallet1=walletRepository.getById(wId);
 		if(wallet1.getId() !=0 ) walletRepository.deleteById(wId);

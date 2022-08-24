@@ -1,5 +1,6 @@
 package com.cart.api.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +22,20 @@ public class CartController {
 	@Autowired
 	private CartRepository cartRepository;
 	
+	// display the records from  cart
 	@GetMapping("/cart")
 	public List<Cart> getCart() {
 		
 		return cartRepository.findAll();
 	}
+	//posting the records in the cart
 	@PostMapping("/cart")
 	public Cart postCart(@RequestBody Cart cart)
 	{
 		return cartRepository.save(cart);
 		
 	}
-	
+	//update cart
 	@PutMapping("/cart/{cId}")
 	public Cart updateCart(@PathVariable("cId") Long cId, @RequestBody Cart cart) {
 		Cart cart1=cartRepository.getById(cId);
@@ -45,12 +48,14 @@ public class CartController {
 
 		return cartRepository.save(cart1);
 	}
-	
+	//delete product in cart using cart id
 	@DeleteMapping("/cart/{cId}")
 	public List<Cart> deleteCart(@PathVariable("cId") Long cId){
 		cartRepository.deleteById(cId);
 		return cartRepository.findAll();
 	}
+	
+	
 	
 
 }

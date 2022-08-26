@@ -17,55 +17,53 @@ import com.profile.api.repository.UserRepository;
 @RestController
 public class UserController {
 
-	
 	@Autowired
-	private UserRepository  userRepository;
-	
-	
-	//add new user 
+	private UserRepository userRepository;
+
+	// post method to add new user
 	@PostMapping("/user")
-	public User adduser( @RequestBody User user) {
-		
-		
+	public User adduser(@RequestBody User user) {
+
 		return userRepository.save(user);
 	}
-	
-	//get  all users
+
+	// get method to get all users list
 	@GetMapping("/R")
-	public List<User> getAllUser(){
-		
+	public List<User> getalluser() {
+
 		return userRepository.findAll();
 	}
-	
-	//delete user using user ID
-	@DeleteMapping("/user/{uid}")		
-	public void deleteUser(@PathVariable("uid") Long uid) {
+
+	// delete method to delete user using user ID
+	@DeleteMapping("/user/{uid}")
+	public void deleteuser(@PathVariable("uid") Long uid) {
 		userRepository.deleteById(uid);
-		}
-	
-	//update user according to user ID
+	}
+
+	// pur method to update user according to user ID
 	@PutMapping("/user/update/{uid}")
-	public User updateUser(@PathVariable("uid") Long uid, @RequestBody User Newuser) {
-		
-		User userDB= userRepository.getById(uid);
-		
-		if(Newuser.getName() !=null) 
-			userDB.setName(Newuser.getName());
-			
-		if(Newuser.getAddress() !=null) 
-			userDB.setAddress(Newuser.getAddress());
-		if(Newuser.getRole() !=null) 
-			userDB.setRole(Newuser.getRole());
-					
-		if(Newuser.getMobile() !=null) 
-			userDB.setMobile(Newuser.getMobile());
-						
-		if(Newuser.getAge() !=0) 
-			userDB.setAge(Newuser.getAge());
-			
-		if(Newuser.getEmail() !=null) 
-			userDB.setEmail(Newuser.getEmail());
-		
+	public User updateuser(@PathVariable("uid") Long uid, @RequestBody User newuser) {
+
+		User userDB = userRepository.getById(uid);
+
+		if (newuser.getName() != null)
+			userDB.setName(newuser.getName());
+
+		if (newuser.getAddress() != null)
+			userDB.setAddress(newuser.getAddress());
+		if (newuser.getRole() != null)
+			userDB.setRole(newuser.getRole());
+
+		if (newuser.getMobile() != null)
+			userDB.setMobile(newuser.getMobile());
+
+		if (newuser.getAge() != 0)
+			userDB.setAge(newuser.getAge());
+
+		if (newuser.getEmail() != null)
+			userDB.setEmail(newuser.getEmail());
+
 		return userRepository.save(userDB);
-}
+	}
+
 }

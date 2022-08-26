@@ -20,6 +20,19 @@ public class Wallet {
 	private String productName;
 	private String description;
 	
+	
+	
+	public Wallet() {
+		super();
+	}
+	public Wallet(Long id, Long userId, int balance, String productName, String description) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.balance = balance;
+		this.productName = productName;
+		this.description = description;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -49,6 +62,11 @@ public class Wallet {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	@Override
+	public String toString() {
+		return "Wallet [id=" + id + ", userId=" + userId + ", balance=" + balance + ", productName=" + productName
+				+ ", description=" + description + "]";
 	}
 	
 	

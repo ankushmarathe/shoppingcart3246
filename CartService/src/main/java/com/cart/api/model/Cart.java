@@ -1,5 +1,6 @@
 package com.cart.api.model;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -16,6 +17,15 @@ public class Cart {
 private String productName;
 private Double price;
 private int quantity;
+
+
+public Cart(long id, String productName, double price, int quantity) {
+	
+	this.id = id;
+	this.productName = productName;
+	this.price = price;
+	this.quantity = quantity;
+}
 public Long getId() {
 	return id;
 }
@@ -55,6 +65,10 @@ public boolean equals(Object obj) {
 	Cart other = (Cart) obj;
 	return Objects.equals(id, other.id) && Objects.equals(price, other.price)
 			&& Objects.equals(productName, other.productName) && quantity == other.quantity;
+}
+public int getTotalItems() {
+	 ArrayList<String> items = new ArrayList<>();
+	return items.size();
 }
 
 

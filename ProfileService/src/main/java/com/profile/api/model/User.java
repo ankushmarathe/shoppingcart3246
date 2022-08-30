@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class User {
 
@@ -16,28 +18,31 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@ApiModelProperty(notes="the id of the each product is unique")
 	private int profileId;
 
 	@Column(nullable = false)
+	@ApiModelProperty(notes="Name of user")
 	private String fullName;
 
-	
+	@ApiModelProperty(notes="Mobile no of user")
 	private String mobilenumber;
 
 	@Column(nullable = false)
+	@ApiModelProperty(notes="Role of user")
 	private String role;
-
+	@ApiModelProperty(notes="Gender of user")
 	private String gender;
 
 	private String about;
-
+	@ApiModelProperty(notes="Password of user")
 	private String password;
-
+	@ApiModelProperty(notes="DOB of user")
 	private LocalDate dateOfBirth;
-
+	@ApiModelProperty(notes="Gmail of user")
 	@Column(nullable = false)
 	private String emailId;
-	
+	@ApiModelProperty("Username of user")
 	private String username;
 
 	

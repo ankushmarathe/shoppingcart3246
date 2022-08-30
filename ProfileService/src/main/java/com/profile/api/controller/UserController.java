@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.profile.api.model.User;
 import com.profile.api.repository.UserRepository;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class UserController {
@@ -33,6 +36,8 @@ public class UserController {
 	 */
 	// post method to add new user
 	@PostMapping("/user")
+	@ApiOperation(value="registration of new user",
+	response=User.class)
 	public User adduser(@RequestBody User user) {
 		String passEncoded = passwordEncoder.encode(user.getPassword());
 		user.setPassword(passEncoded);
@@ -41,6 +46,8 @@ public class UserController {
 
 	// get method to get all users list
 	@GetMapping("/user")
+	@ApiOperation(value="Fetch all users",
+	response=User.class)
 	public List<User> getalluser() {
 
 		return userRepository.findAll();
@@ -48,11 +55,16 @@ public class UserController {
 
 	// delete method to delete user using user ID
 	@DeleteMapping("/user/{uid}")
+	@ApiOperation(value="delete user by id",
+	notes = "provide an id of the user and delete it",
+	response=User.class)
 	public void deleteuser(@PathVariable("uid") Long uid) {
 		userRepository.deleteById(uid);
 	}
 
-	
+	@ApiOperation(value="fetch the user by username",
+			notes = "provide an username of the user and fetch it",
+			response=User.class)
 	@GetMapping("/user/{username}")
 	public User getByUsername(@PathVariable("username") String username) {
 		
@@ -71,6 +83,9 @@ public class UserController {
 	 */
 	
 	@GetMapping("/user/{id}")
+	@ApiOperation(value="get user by id",
+	notes = "provide an id of the user and fetch it",
+	response=User.class)
 	public User getByUserId(@PathVariable("id") long id) {
 		
 		User user= userRepository.getById(id);
@@ -78,8 +93,11 @@ public class UserController {
 		return user;
 	}
 	
-	// pur method to update user according to user ID
+	// put method to update user according to user ID
 	@PutMapping("/user/update/{uid}")
+	@ApiOperation(value="update user by id",
+	notes = "provide an id of the user and update it",
+	response=User.class)
 	public User updateuser(@PathVariable("uid") Long uid, @RequestBody User newuser) {
 
 		User userDB = userRepository.getById(uid);

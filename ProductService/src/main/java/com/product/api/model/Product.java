@@ -9,21 +9,31 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import io.swagger.annotations.ApiModelProperty;
+
 
 
 @Entity
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
- private int id;
+	@ApiModelProperty(notes="the id of the each product is unique")
+    private int id;
+	@ApiModelProperty(notes="Type of product")
 	private String productType;
+	@ApiModelProperty(notes="Name of product")
 	private String productName;
+	@ApiModelProperty(notes="Category of product")
 	private String category;
+	@ApiModelProperty(notes="Rating of product")
 	private int rating;
+	@ApiModelProperty(notes="Review of product")
 	private String review;
-
+	@ApiModelProperty(notes="Price of product")
 	private double price;
+	@ApiModelProperty(notes="Description of product")
 	private String description;
+	@ApiModelProperty(notes="Specification of product")
 	private String specification;
 	
 	public Product(int id, String productType, String productName, String category, int rating, String review,

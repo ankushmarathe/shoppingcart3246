@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.product.api.model.Product;
 import com.product.api.repository.ProductRepository;
 
+import io.swagger.annotations.ApiOperation;
+
 
 @RestController
 public class ProductController {
@@ -24,11 +26,14 @@ public class ProductController {
 	//Add Products 
 	
 	@PostMapping("/product")
+	@ApiOperation(value="Add products in DB",
+	response=Product.class)
 	public Product addProduct(@RequestBody Product product) {
 		return productRepository.save(product);
 }	
 	//Get All Products
-	
+	@ApiOperation(value="Fetch all products",
+			response=Product.class)
 	@GetMapping("/product")
 	public List<Product> getProduct(){
 		List<Product> list = productRepository.findAll();
@@ -38,7 +43,9 @@ public class ProductController {
 	//Get Product BY ID
 
       @GetMapping("/product/{pid}")
-	
+      @ApiOperation(value="Fetch product by id",
+  	notes = "provide an id of the product and fetch it",
+  	response=Product.class)
 	public Product getProductById(@PathVariable("pid")Long pid) {
 		return productRepository.getProductById(pid);
 	}
@@ -46,6 +53,9 @@ public class ProductController {
 	// Update Product
 	
 	 @PutMapping("/product/update/{pid}")
+	 @ApiOperation(value="update product by id",
+		notes = "provide an id of the product and update it",
+		response=Product.class)
 		public Product updateProduct(@PathVariable("pid")Long pid, @RequestBody Product
 				proNew, Principal principal) {
 			String username= principal.getName();
@@ -78,6 +88,9 @@ public class ProductController {
 	 //Delete Product 
 	 
 	 @DeleteMapping("/product/delete/{pid}")
+	 @ApiOperation(value="Delete product by id",
+		notes = "provide an id of the product and delete it",
+		response=Product.class)
 	 public void deleteProduct(@PathVariable("pid") Long pid) {
 		  productRepository.deleteById(pid); 
 	 }

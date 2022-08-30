@@ -3,6 +3,7 @@ package com.profile.api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,55 +18,103 @@ import com.profile.api.repository.UserRepository;
 @RestController
 public class UserController {
 
+	@Autowired
+	private UserRepository userRepository;
+
+	
 	
 	@Autowired
-	private UserRepository  userRepository;
-	
-	
-	//add new user 
+	private PasswordEncoder passwordEncoder;
+
+	/*
+	 * @GetMapping("/hello") public String gethello() {
+	 * 
+	 * return "hello user"; }
+	 */
+	// post method to add new user
 	@PostMapping("/user")
-	public User adduser( @RequestBody User user) {
-		
-		
+	public User adduser(@RequestBody User user) {
+		String passEncoded = passwordEncoder.encode(user.getPassword());
+		user.setPassword(passEncoded);
 		return userRepository.save(user);
 	}
-	
-	//get  all users
-	@GetMapping("/R")
-	public List<User> getAllUser(){
-		
+
+	// get method to get all users list
+	@GetMapping("/user")
+	public List<User> getalluser() {
+
 		return userRepository.findAll();
 	}
-	
-	//delete user using user ID
-	@DeleteMapping("/user/{uid}")		
-	public void deleteUser(@PathVariable("uid") Long uid) {
+
+	// delete method to delete user using user ID
+	@DeleteMapping("/user/{uid}")
+	public void deleteuser(@PathVariable("uid") Long uid) {
 		userRepository.deleteById(uid);
-		}
+	}
+
 	
-	//update user according to user ID
+	@GetMapping("/user/{username}")
+	public User getByUsername(@PathVariable("username") String username) {
+		
+		User user= userRepository.findByUsername(username);
+	    
+		return user;	
+	}
+	
+	/*
+	 * @GetMapping("/user/{mobilenumber}") public User
+	 * getByUsermobile(@PathVariable("mobilenumber") String mobilenumber) {
+	 * 
+	 * User user= userRepository.findByMobilenumber(mobilenumber);
+	 * 
+	 * return user; }
+	 */
+	
+	@GetMapping("/user/{id}")
+	public User getByUserId(@PathVariable("id") long id) {
+		
+		User user= userRepository.getById(id);
+	
+		return user;
+	}
+	
+	// pur method to update user according to user ID
 	@PutMapping("/user/update/{uid}")
-	public User updateUser(@PathVariable("uid") Long uid, @RequestBody User Newuser) {
+	public User updateuser(@PathVariable("uid") Long uid, @RequestBody User newuser) {
+
+		User userDB = userRepository.getById(uid);
+
+		if (newuser.getFullName() != null)
+			userDB.setFullName(newuser.getFullName());
+
+		if (newuser.getAbout() != null)
+			userDB.setAbout(newuser.getAbout());
 		
-		User userDB= userRepository.getById(uid);
+		if (newuser.getRole() != null)
+			userDB.setRole(newuser.getRole());
+
+		if (newuser.getMobilenumber() != null)
+			userDB.setMobilenumber(newuser.getMobilenumber());
+
+		if (newuser.getGender()!= null)
+			userDB.setGender(newuser.getGender());
 		
-		if(Newuser.getName() !=null) 
-			userDB.setName(Newuser.getName());
-			
-		if(Newuser.getAddress() !=null) 
-			userDB.setAddress(Newuser.getAddress());
-		if(Newuser.getRole() !=null) 
-			userDB.setRole(Newuser.getRole());
-					
-		if(Newuser.getMobile() !=null) 
-			userDB.setMobile(Newuser.getMobile());
-						
-		if(Newuser.getAge() !=0) 
-			userDB.setAge(Newuser.getAge());
-			
-		if(Newuser.getEmail() !=null) 
-			userDB.setEmail(Newuser.getEmail());
+
+		if (newuser.getPassword()!= null)
+			userDB.setPassword(newuser.getPassword());
 		
+
+		if (newuser.getDateOfBirth()!= null)
+			userDB.setDateOfBirth(newuser.getDateOfBirth());
+		
+		if (newuser.getEmailId() != null)
+			userDB.setEmailId(newuser.getEmailId());
+		if (newuser.getUsername() != null)
+			userDB.setUsername(newuser.getUsername());
+
 		return userRepository.save(userDB);
-}
+	}
+	
+	
+
 }

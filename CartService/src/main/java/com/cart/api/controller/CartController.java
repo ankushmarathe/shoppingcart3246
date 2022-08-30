@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cart.api.model.Cart;
 import com.cart.api.repository.CartRepository;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 
 
 @RestController
@@ -25,21 +28,28 @@ public class CartController {
 	private CartRepository cartRepository;
 	
 	// display the records from  cart
-	@GetMapping("/allcart")
+	@GetMapping("/getcart")
+	@ApiOperation(value="find all product in the cart",
+	response=Cart.class)
 	public List<Cart> getCart() {
 		
 		return cartRepository.findAll();
 	}
 	//posting the records in the cart
 	@PostMapping("/addcart")
+	@ApiOperation(value="add product in the cart",
+	response=Cart.class)
 	public Cart postCart(@RequestBody Cart cart)
 	{
 		return cartRepository.save(cart);
 		
 	}
 	//update cart
-	@PutMapping("/editcart/{cId}")
-	public Cart updateCart(@PathVariable("cId") Long cId, @RequestBody Cart cart) {
+	@PutMapping("/updatecart/{cId}")
+	@ApiOperation(value="update product by id",
+	notes = "provide an id of the product and update it",
+	response=Cart.class)
+	public Cart updateCart(@ApiParam(value="ID value for updation you need to be retrive",required = true) @PathVariable("cId") Long cId, @RequestBody Cart cart) {
 		Cart cart1=cartRepository.getById(cId);
 		
 		if(cart.getPrice()!=0 && cart.getQuantity()!=0)
@@ -52,7 +62,10 @@ public class CartController {
 	}
 	//delete product in cart using cart id
 	@DeleteMapping("/deletecart/{cId}")
-	public List<Cart> deleteCart(@PathVariable("cId") Long cId){
+	@ApiOperation(value="deletet product by id",
+	notes = "provide an id of the product and delete it",
+	response=Cart.class)
+	public List<Cart> deleteCart(@ApiParam(value="ID value for deletion you need to be retrive",required = true) @PathVariable("cId") Long cId){
 		cartRepository.deleteById(cId);
 		return cartRepository.findAll();
 	}

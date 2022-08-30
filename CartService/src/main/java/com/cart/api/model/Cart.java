@@ -8,17 +8,28 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class Cart {
 	
 @Id
 @GeneratedValue(strategy = GenerationType.AUTO)
+@ApiModelProperty(notes="the id of the each product is unique")
  private Long id;
+@ApiModelProperty(notes="the products name")
 private String productName;
+@ApiModelProperty(notes="the products price")
 private Double price;
+@ApiModelProperty(notes="the number of item of specific product in cart")
 private int quantity;
 
 
+
+public Cart() {
+	super();
+	// TODO Auto-generated constructor stub
+}
 public Cart(long id, String productName, double price, int quantity) {
 	
 	this.id = id;
@@ -66,10 +77,7 @@ public boolean equals(Object obj) {
 	return Objects.equals(id, other.id) && Objects.equals(price, other.price)
 			&& Objects.equals(productName, other.productName) && quantity == other.quantity;
 }
-public int getTotalItems() {
-	 ArrayList<String> items = new ArrayList<>();
-	return items.size();
-}
+
 
 
 

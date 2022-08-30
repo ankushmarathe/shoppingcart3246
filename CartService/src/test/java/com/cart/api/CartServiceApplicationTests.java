@@ -1,8 +1,5 @@
 package com.cart.api;
-
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -21,8 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.cart.api.controller.CartController;
 import com.cart.api.model.Cart;
 import com.cart.api.repository.CartRepository;
-import com.wallet.api.model.Wallet;
-
 
 @SpringBootTest(classes= {CartServiceApplicationTests.class})
 class CartServiceApplicationTests {
@@ -44,7 +39,7 @@ class CartServiceApplicationTests {
 		
 	}
 	
-	@Test//checking the when there is no product in cart
+	@Test//checking  when there is no product in cart
 	public void getCartTest2() {
 		List<Cart> cartList1=new ArrayList<>();
 		

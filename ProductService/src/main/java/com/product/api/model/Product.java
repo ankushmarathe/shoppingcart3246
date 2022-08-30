@@ -21,12 +21,13 @@ public class Product {
 	private String category;
 	private int rating;
 	private String review;
-//	private List<String> image;
+
 	private double price;
 	private String description;
 	private String specification;
+	
 	public Product(int id, String productType, String productName, String category, int rating, String review,
-			List<String> image, double price, String description, String specification) {
+			double price, String description, String specification) {
 		super();
 		this.id = id;
 		this.productType = productType;
@@ -34,7 +35,6 @@ public class Product {
 		this.category = category;
 		this.rating = rating;
 		this.review = review;
-	//	this.image = image;
 		this.price = price;
 		this.description = description;
 		this.specification = specification;
@@ -75,12 +75,6 @@ public class Product {
 	public void setReview(String review) {
 		this.review = review;
 	}
-//	public List<String> getImage() {
-//		return image;
-//	}
-//	public void setImage(List<String> image) {
-//		this.image = image;
-//	}
 	public double getPrice() {
 		return price;
 	}
@@ -102,30 +96,28 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", productType=" + productType + ", productName=" + productName + ", category="
-				+ category + ", rating=" + rating + ", review=" + review + ", image=" +  ", price=" + price
-				+ ", description=" + description + ", specification=" + specification + "]";
+				+ category + ", rating=" + rating + ", review=" + review + ", price=" + price + ", description="
+				+ description + ", specification=" + specification + "]";
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(category, description, id, price, productName, productType, rating, review,
-				specification);
+		return Objects.hash(category, description, id, price, productName, productType, rating, review, specification);
 	}
-//	@Override
-//	public boolean equals(Object obj) {
-//		if (this == obj)
-//			return true;
-//		if (obj == null)
-//			return false;
-//		if (getClass() != obj.getClass())
-//			return false;
-//		Product other = (Product) obj;
-//		return Objects.equals(category, other.category) && Objects.equals(description, other.description)
-//				&& id == other.id && Objects.equals(image, other.image)
-//				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price)
-//				&& Objects.equals(productName, other.productName) && Objects.equals(productType, other.productType)
-//				&& rating == other.rating && Objects.equals(review, other.review)
-//				&& Objects.equals(specification, other.specification);
-//	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		return Objects.equals(category, other.category) && Objects.equals(description, other.description)
+				&& id == other.id && Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price)
+				&& Objects.equals(productName, other.productName) && Objects.equals(productType, other.productType)
+				&& rating == other.rating && Objects.equals(review, other.review)
+				&& Objects.equals(specification, other.specification);
+	}
 
 	
 	

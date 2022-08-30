@@ -37,11 +37,11 @@ public class ProductController {
 	
 	//Get Product BY ID
 
-	@GetMapping("/product/{id}")
-	public Product getProduct(@PathVariable("id") long id) {
-		Product product= productRepository.getById(id);
-	    return product;
-			}
+      @GetMapping("/product/{pid}")
+	
+	public Product getProductById(@PathVariable("pid")Long pid) {
+		return productRepository.getProductById(pid);
+	}
 	
 	// Update Product
 	
@@ -61,11 +61,10 @@ public class ProductController {
 			if (proNew.getCategory()!=null)
 				proDB.setCategory(proNew.getCategory());
 			
-//			if (proNew.getImage()!=null)
-//				proDB.setImage(proNew.getImage());
 
-//			if (proNew.getPrice()!=null)
-//				proDB.setPrice(proNew.getPrice());
+
+			if (proNew.getPrice()!= 0l)
+				proDB.setPrice(proNew.getPrice());
 			
 			if (proNew.getDescription()!=null)
 				proDB.setDescription(proNew.getDescription());
@@ -82,4 +81,6 @@ public class ProductController {
 	 public void deleteProduct(@PathVariable("pid") Long pid) {
 		  productRepository.deleteById(pid); 
 	 }
+
+	
 }

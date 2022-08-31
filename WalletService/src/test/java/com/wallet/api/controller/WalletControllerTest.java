@@ -24,6 +24,28 @@ public class WalletControllerTest {
 
 	@InjectMocks
 	WalletController walletController;
+	
+	@Test//test case for get all wallets
+	public void aTest1() {
+		List<Wallet> walletList1=new ArrayList<>();
+		
+		walletList1.add(new Wallet((long)1, (long)1, 0, "a", "b")) ;
+		walletList1.add(new Wallet((long)2, (long)3, 0, "c", "o")) ;
+		walletList1.add(new Wallet((long)3, (long)5, 0, "d", "t")) ;
+		
+		when(walletRepository.findAll()).thenReturn(walletList1);
+		
+		assertEquals(walletList1, walletController.getWallet());
+	}
+	
+	@Test//test case for get all wallets when there is no record in DB 
+	public void aTest2() {
+		List<Wallet> walletList1=new ArrayList<>();
+		
+		when(walletRepository.findAll()).thenReturn(walletList1);
+		
+		assertEquals(walletList1, walletController.getWallet());
+	}
 
 
 	@Test//test case for get all wallets

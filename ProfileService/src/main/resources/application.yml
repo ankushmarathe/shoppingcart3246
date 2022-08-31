@@ -1,0 +1,34 @@
+
+
+security:
+  oauth2:
+    client:
+      client-id: 257a7b50e1d0e143cb45
+      client-secret: 25561af9e853ac58953d77288d52db511989275c
+      access-token-uri: https://github.com/login/oauth/access_token
+      user-authorization-uri: https://github.com/login/oauth/authorize
+      #token-name: oauth_token
+      #authentication-scheme: query
+      client-authentication-scheme: form
+    resource:
+      user-info-uri: https://api.github.com/user
+      prefer-token-info: false
+      
+security2:
+  oauth2:
+    client:
+      client-id: 372509387363-35lvcgcv3knl804j49o58n20m3het890.apps.googleusercontent.com
+      client-secret: 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
+      access-token-uri: https://gmail.com/login/oauth/access_token
+      user-authorization-uri: https://gmail.com/login/oauth/authorize
+      #token-name: oauth_token
+      #authentication-scheme: query
+      client-authentication-scheme: form
+    resource:
+      user-info-uri: https://api.gmail.com/user
+      prefer-token-info: false
+      
+      
+      
+      
+    

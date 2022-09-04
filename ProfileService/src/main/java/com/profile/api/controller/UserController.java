@@ -1,8 +1,10 @@
 package com.profile.api.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,7 @@ import com.profile.api.repository.UserRepository;
 
 import io.swagger.annotations.ApiOperation;
 
+@EnableOAuth2Sso
 @RestController
 public class UserController {
 
@@ -26,8 +29,8 @@ public class UserController {
 
 	
 	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	//@Autowired
+	//private PasswordEncoder passwordEncoder;
 
 	/*
 	 * @GetMapping("/hello") public String gethello() {
@@ -35,17 +38,29 @@ public class UserController {
 	 * return "hello user"; }
 	 */
 	// post method to add new user
-	@PostMapping("/user")
+	
+	
+	@GetMapping("/")
+	public String message(Principal principal) {
+		return "Hi "+principal.getName()+" welcome to SpringCloudOauth2ExampleApplication";
+	}
+	
+	@GetMapping("/user")
+	public String message1(Principal principal) {
+		return "Hi "+principal.getName()+" welcome ";
+	}
+	
+	@PostMapping("/users")
 	@ApiOperation(value="registration of new user",
 	response=User.class)
 	public User adduser(@RequestBody User user) {
-		String passEncoded = passwordEncoder.encode(user.getPassword());
-		user.setPassword(passEncoded);
+		//String passEncoded = passwordEncoder.encode(user.getPassword());
+		//user.setPassword(passEncoded);
 		return userRepository.save(user);
 	}
 
 	// get method to get all users list
-	@GetMapping("/user")
+	@GetMapping("/user1")
 	@ApiOperation(value="Fetch all users",
 	response=User.class)
 	public List<User> getalluser() {

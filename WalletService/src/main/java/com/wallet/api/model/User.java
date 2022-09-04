@@ -66,12 +66,12 @@ public void setUserId(int userId) {
 	this.userId = userId;
 }
 
-public String getusername() {
+public String getUsername() {
 	return username;
 }
 
-public void setusername(String username) {
-	username = username;
+public void setUsername(String username) {
+	this.username = username;
 }
 
 public String getAddress() {

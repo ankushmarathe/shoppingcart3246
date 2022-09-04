@@ -1,4 +1,4 @@
-/*package com.shoppingcartgateway.api;
+package com.wallet.api;
 
 import org.aspectj.weaver.ast.And;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +13,19 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.shoppingcartgateway.api.service.MyUserDeatilsService;
+import com.wallet.api.service.MyUserDetailsService;
 
 
 
-@SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Autowired
-	private MyUserDeatilsService myUserDetailsService;
+	private MyUserDetailsService myUserDetailsService;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -51,11 +51,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-						.antMatchers(HttpMethod.POST,"/user").permitAll()
-						.antMatchers(HttpMethod.GET,"/wallet/**").permitAll()
-						//.antMatchers("/employee").permitAll()
-						//.antMatchers("/employee/department").permitAll()
-						//.antMatchers("/employee").hasAnyAuthority("MANAGER")
+						.antMatchers(HttpMethod.GET,"/wallet/allWallets").permitAll()
+						.antMatchers(HttpMethod.POST,"/wallet/saveWallet").authenticated()
+						.antMatchers(HttpMethod.PUT,"/wallet/editWallets").authenticated()
+						.antMatchers(HttpMethod.DELETE,"/wallet/deleteWallet").authenticated()
+						.antMatchers(HttpMethod.GET,"/wallet/u/**").permitAll()
 						.anyRequest().permitAll()
 						.and().httpBasic()
 						.and().csrf().disable();
@@ -63,8 +63,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Bean
 	public PasswordEncoder getPassEncoder(){
-		PasswordEncoder encoder=new BCryptPasswordEncoder();
-		return encoder;
+//		PasswordEncoder encoder=new BCryptPasswordEncoder();
+//		return encoder;
+		
+		return NoOpPasswordEncoder.getInstance();
 	}
 }
-*/

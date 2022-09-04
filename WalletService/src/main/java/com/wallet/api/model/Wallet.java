@@ -6,32 +6,35 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import io.swagger.annotations.ApiModelProperty;
+
 
 @Entity
 public class Wallet {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@ApiModelProperty(notes="the id of the each Wallet is unique")
 	private Long id;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private Long userId;
+	@ApiModelProperty(notes="Balance in wallet")
 	private int balance=0;
-	private String productName;
-	private String description;
+	private boolean activate=false;
+	
 	
 	
 	
 	public Wallet() {
 		super();
 	}
-	public Wallet(Long id, Long userId, int balance, String productName, String description) {
+	public Wallet(Long id, Long userId, int balance, boolean activate) {
 		super();
 		this.id = id;
 		this.userId = userId;
 		this.balance = balance;
-		this.productName = productName;
-		this.description = description;
+		this.activate = activate;
 	}
 	public Long getId() {
 		return id;
@@ -51,25 +54,16 @@ public class Wallet {
 	public void setBalance(int balance) {
 		this.balance = balance;
 	}
-	public String getProductName() {
-		return productName;
+	public boolean isActivate() {
+		return activate;
 	}
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setActivate(boolean activate) {
+		this.activate = activate;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
+	
 	@Override
 	public String toString() {
-		return "Wallet [id=" + id + ", userId=" + userId + ", balance=" + balance + ", productName=" + productName
-				+ ", description=" + description + "]";
+		return "Wallet [id=" + id + ", userId=" + userId + ", balance=" + balance + ", activate=" + activate + "]";
 	}
-	
-	
-	
 	
 }

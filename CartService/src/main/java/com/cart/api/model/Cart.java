@@ -3,6 +3,7 @@ package com.cart.api.model;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,8 @@ public class Cart {
 @GeneratedValue(strategy = GenerationType.AUTO)
 @ApiModelProperty(notes="the id of the each product is unique")
  private Long id;
+@Column(nullable = false, unique = true)
+private Long userId;
 @ApiModelProperty(notes="the products name")
 private String productName;
 @ApiModelProperty(notes="the products price")
@@ -30,9 +33,10 @@ public Cart() {
 	super();
 	// TODO Auto-generated constructor stub
 }
-public Cart(long id, String productName, double price, int quantity) {
+public Cart(long id,long userId, String productName, double price, int quantity) {
 	
 	this.id = id;
+	this.userId = userId;
 	this.productName = productName;
 	this.price = price;
 	this.quantity = quantity;
@@ -42,6 +46,13 @@ public Long getId() {
 }
 public void setId(Long id) {
 	this.id = id;
+}
+
+public Long getUserId() {
+	return userId;
+}
+public void setUserId(Long userId) {
+	this.userId = userId;
 }
 public String getProductName() {
 	return productName;

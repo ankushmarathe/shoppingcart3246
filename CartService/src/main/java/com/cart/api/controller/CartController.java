@@ -12,9 +12,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.cart.api.model.Cart;
 import com.cart.api.repository.CartRepository;
+
+import com.cart.api.model.User;
+
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -28,7 +32,7 @@ public class CartController {
 	private CartRepository cartRepository;
 	
 	// display the records from  cart
-	@GetMapping("/getcart")
+	@GetMapping("/allcart")
 	@ApiOperation(value="find all product in the cart",
 	response=Cart.class)
 	public List<Cart> getCart() {
@@ -68,6 +72,36 @@ public class CartController {
 	public List<Cart> deleteCart(@ApiParam(value="ID value for deletion you need to be retrive",required = true) @PathVariable("cId") Long cId){
 		cartRepository.deleteById(cId);
 		return cartRepository.findAll();
+	}
+	
+	// fetch product in cart using userId
+	
+	@GetMapping("/getcart/{uId}")
+	public Cart getCartByUserId(@PathVariable("uId") Long uId) {
+		RestTemplate restTemplate=new RestTemplate();
+        User user=restTemplate.getForObject("http://localhost:1000/user/"+uId, User.class);
+		
+		if(user.getUserId()!=0) return cartRepository.getByUserId(uId);
+		return new Cart();
+		
+		
+	}
+	
+	//post product in cart using userId
+	
+	@PostMapping("/addcart/{uId}")
+	public Cart postCart(@RequestBody Cart cart, @PathVariable("uId") Long uId) {
+		
+		RestTemplate restTemplate=new RestTemplate();
+		
+		User user=restTemplate.getForObject("http://localhost:1000/user/"+uId, User.class);
+		
+		if(user!=null) {
+			cart.setUserId(uId);
+			return cartRepository.save(cart);
+		}
+		
+		return new Cart();
 	}
 	
 	

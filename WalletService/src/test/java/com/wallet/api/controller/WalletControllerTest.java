@@ -24,15 +24,37 @@ public class WalletControllerTest {
 
 	@InjectMocks
 	WalletController walletController;
+	
+	@Test//test case for get all wallets
+	public void aTest1() {
+		List<Wallet> walletList1=new ArrayList<>();
+		
+		walletList1.add(new Wallet((long)1, (long)1, 0, false)) ;
+		walletList1.add(new Wallet((long)2, (long)3, 0, false)) ;
+		walletList1.add(new Wallet((long)3, (long)5, 0, false)) ;
+		
+		when(walletRepository.findAll()).thenReturn(walletList1);
+		
+		assertEquals(walletList1, walletController.getWallet());
+	}
+	
+	@Test//test case for get all wallets when there is no record in DB 
+	public void aTest2() {
+		List<Wallet> walletList1=new ArrayList<>();
+		
+		when(walletRepository.findAll()).thenReturn(walletList1);
+		
+		assertEquals(walletList1, walletController.getWallet());
+	}
 
 
 	@Test//test case for get all wallets
 	public void getWalletsTest1() {
 		List<Wallet> walletList1=new ArrayList<>();
 		
-		walletList1.add(new Wallet((long)1, (long)1, 0, "a", "b")) ;
-		walletList1.add(new Wallet((long)2, (long)3, 0, "c", "o")) ;
-		walletList1.add(new Wallet((long)3, (long)5, 0, "d", "t")) ;
+		walletList1.add(new Wallet((long)1, (long)1, 0, false)) ;
+		walletList1.add(new Wallet((long)2, (long)3, 0, false)) ;
+		walletList1.add(new Wallet((long)3, (long)5, 0, false)) ;
 		
 		when(walletRepository.findAll()).thenReturn(walletList1);
 		
@@ -50,7 +72,7 @@ public class WalletControllerTest {
 	
 	@Test//test case for post(saving) wallet
 	public void postWalletTest1() {
-		Wallet wallet=new Wallet((long)3, (long)5, 0, "d", "t");
+		Wallet wallet=new Wallet((long)3, (long)5, 0, false);
 		
 		when(walletRepository.save(wallet)).thenReturn(wallet);
 		
@@ -59,12 +81,12 @@ public class WalletControllerTest {
 	
 	@Test//test case for updating balance
 	public void putWalletTest1() {
-		Wallet wallet=new Wallet((long)1, (long)5, 0, "d", "t");
+		Wallet wallet=new Wallet((long)1, (long)5, 0, false);
 		
 		when(walletRepository.getById((long)1)).thenReturn(wallet);
 
 		int newBalance=10;
-		Wallet wallet1=new Wallet((long)0, (long)0, newBalance, null, null);
+		Wallet wallet1=new Wallet((long)0, (long)0, newBalance, false);
 		
 		when(walletController.putWallet((long)1, wallet1)).thenReturn(wallet);
 		
@@ -73,7 +95,7 @@ public class WalletControllerTest {
 	
 	@Test//test case for delete wallet
 	public void deleteWalletTest1() {
-		Wallet wallet=new Wallet((long)1, (long)5, 0, "d", "t");
+		Wallet wallet=new Wallet((long)1, (long)5, 0, false);
 
 		when(walletRepository.getById((long)1)).thenReturn(wallet);
 		

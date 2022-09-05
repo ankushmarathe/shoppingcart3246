@@ -14,7 +14,7 @@ public class User {
 	private String username;
 	private String password;
 	@Column(nullable = false)
-	private String Address;
+	private String address;
 	@Column(nullable = false)
 	private String role;
 	
@@ -29,7 +29,7 @@ public User(int userId, String username, String password,String address, String 
 	this.userId = userId;
 	this.username = username;
 	this.password=password;
-	this.Address = address;
+	this.address = address;
 	this.role = role;
 	this.mobile = mobile;
 	this.age = age;
@@ -68,15 +68,15 @@ public String getusername() {
 }
 
 public void setusername(String username) {
-	username = username;
+	this.username = username;
 }
 
 public String getAddress() {
-	return Address;
+	return address;
 }
 
 public void setAddress(String address) {
-	Address = address;
+	this.address = address;
 }
 
 public String getRole() {

@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.cart.api.model.Cart;
 import com.cart.api.repository.CartRepository;
-
+import com.cart.api.repository.UserRepository;
 import com.cart.api.model.User;
 
 
@@ -30,6 +30,9 @@ import io.swagger.annotations.ApiParam;
 public class CartController {
 	@Autowired
 	private CartRepository cartRepository;
+	@Autowired
+	private UserRepository userRepository;
+	
 	
 	// display the records from  cart
 	@GetMapping("/allcart")
@@ -39,6 +42,8 @@ public class CartController {
 		
 		return cartRepository.findAll();
 	}
+	
+	
 	//posting the records in the cart
 	@PostMapping("/addcart")
 	@ApiOperation(value="add product in the cart",
@@ -48,6 +53,8 @@ public class CartController {
 		return cartRepository.save(cart);
 		
 	}
+	
+	
 	//update cart
 	@PutMapping("/updatecart/{cId}")
 	@ApiOperation(value="update product by id",
@@ -64,6 +71,8 @@ public class CartController {
 
 		return cartRepository.save(cart1);
 	}
+	
+	
 	//delete product in cart using cart id
 	@DeleteMapping("/deletecart/{cId}")
 	@ApiOperation(value="deletet product by id",
@@ -74,10 +83,13 @@ public class CartController {
 		return cartRepository.findAll();
 	}
 	
+	
+	
 	// fetch product in cart using userId
 	
 	@GetMapping("/getcart/{uId}")
-	public Cart getCartByUserId(@PathVariable("uId") Long uId) {
+	public Cart getCartByUserId(@PathVariable("uId") Long uId) 
+	{
 		RestTemplate restTemplate=new RestTemplate();
         User user=restTemplate.getForObject("http://localhost:1000/user/"+uId, User.class);
 		
@@ -86,6 +98,8 @@ public class CartController {
 		
 		
 	}
+	
+	
 	
 	//post product in cart using userId
 	
@@ -102,6 +116,22 @@ public class CartController {
 		}
 		
 		return new Cart();
+	}
+	
+	
+	@PostMapping("/user")
+	public void postuser(@RequestBody User user)
+	{
+		userRepository.save(user);
+	}
+	
+	
+	//fetch user by username
+	@GetMapping("user/{username}")
+	public User getByUsername(@PathVariable("username") String username )
+	{
+		User user=userRepository.findByUsername(username);
+		return user;
 	}
 	
 	

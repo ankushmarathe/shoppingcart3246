@@ -3,7 +3,6 @@ package com.profile.api.form;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.UserProfile;
-
 public class AppUserForm {
 
 	private Long userId;

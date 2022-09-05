@@ -14,7 +14,6 @@ import com.profile.api.model.AppRole;
 import com.profile.api.model.AppUser;
 import com.profile.api.model.UserRole;
 
-
 @Repository
 @Transactional
 public class AppRoleDAO {

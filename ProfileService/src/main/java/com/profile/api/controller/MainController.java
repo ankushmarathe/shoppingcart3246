@@ -27,13 +27,13 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
+import com.profile.api.AppUserValidator;
 import com.profile.api.dao.AppUserDAO;
 import com.profile.api.form.AppUserForm;
 import com.profile.api.model.AppRole;
 import com.profile.api.model.AppUser;
 import com.profile.api.utils.SecurityUtils;
 import com.profile.api.utils.WebUtil;
-
 
 
 @Controller
@@ -49,9 +49,22 @@ public class MainController {
 	@Autowired
 	private UsersConnectionRepository connectionRepository;
 
-	
+	@Autowired
+	private AppUserValidator appUserValidator;
 
-	
+	@InitBinder
+	protected void initBinder(WebDataBinder dataBinder) {
+
+		Object target = dataBinder.getTarget();
+		if (target == null) {
+			return;
+		}
+		System.out.println("Target=" + target);
+
+		if (target.getClass() == AppUserForm.class) {
+			dataBinder.setValidator(appUserValidator);
+		}
+	}
 
 	@RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
 	public String welcomePage(Model model) {

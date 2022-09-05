@@ -40,15 +40,7 @@ public class ProductController {
 		return list;
 	}
 	
-	//Get Product BY ID
 
-      @GetMapping("/product/{pid}")
-      @ApiOperation(value="Fetch product by id",
-  	notes = "provide an id of the product and fetch it",
-  	response=Product.class)
-	public Product getProductById(@PathVariable("pid")Long pid) {
-		return productRepository.getProductById(pid);
-	}
 	
 	// Update Product
 	
@@ -94,6 +86,53 @@ public class ProductController {
 	 public void deleteProduct(@PathVariable("pid") Long pid) {
 		  productRepository.deleteById(pid); 
 	 }
+		//Get Product BY ID
+
+//     @GetMapping("/product/{pid}")
+//     @ApiOperation(value="Fetch product by id",
+// 	notes = "provide an id of the product and fetch it",
+// 	response=Product.class)
+//	public Product getProductById(@PathVariable("pid")Long pid) {
+//		return productRepository.findProductById(pid);
+//	}
+	 
+//	 @GetMapping("/product/{id}")
+//		@ApiOperation(value="get product by id",
+//		notes = "provide an id of the product and fetch it",
+//		response=Product.class)
+//		public Product getByUserId(@PathVariable("id") long id) {
+//			
+//			Product user= productRepository.getById(id);
+//		
+//			return user;
+//		}
+	 
+	 
+	 //Get Product By Id
+	 
+	 @GetMapping ("/product/{id}")
+	 public Product getProductbyId(@PathVariable ("id") Integer id) {
+		 return productRepository.getById(id);
+	 }
+     //Get Product By Name
+     
+    @GetMapping("/product/name/{name}")
+     public List<Product> getProductByProductName(@PathVariable("name") String name) {
+    	 return productRepository.getProductByProductName(name);
+     }
+     
+     // Get Product By Category
+     @GetMapping("/product/category/{category}")
+     public List<Product> getProductByCategory(@PathVariable("category") String category) {
+    	 return productRepository.getProductByCategory(category);
+    	 
+     }
+     //Get Product By Type
+     @GetMapping("/product/type/{type}")
+     public List<Product> getProductByType(@PathVariable("type") String type) {
+    	 return productRepository.getProductByProductType(type);
+    	 
+     }
 
 	
 }

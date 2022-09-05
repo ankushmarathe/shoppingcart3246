@@ -3,10 +3,16 @@ package com.order.api.model;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "order")
 public class Order {
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long orderId;
 	private LocalDate orderDate;
 	private int customerId;
@@ -15,6 +21,12 @@ public class Order {
 	private String orderStatus;
 	private int quantity;
 	
+	
+	public Order() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public Order(Long orderId, LocalDate orderDate, int customerId, double ammountPaid, String modeOfPayment,
 			String orderStatus, int quantity) {
 		super();

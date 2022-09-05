@@ -32,7 +32,7 @@ class CartServiceApplicationTests {
    //checking the all records in cart
 	@Test
 	public void getCartTest() {
-		when(cartRepository.findAll()).thenReturn(Stream.of(new Cart(1, "abc", 2000, 2 ),new Cart(2, "bnm", 3000, 1))
+		when(cartRepository.findAll()).thenReturn(Stream.of(new Cart(1,1, "abc", 2000, 2 ),new Cart(2,2, "bnm", 3000, 1))
 				.collect(Collectors.toList()));
 		
 		assertEquals(2, cartController.getCart().size());
@@ -51,19 +51,19 @@ class CartServiceApplicationTests {
 	//checking the test case for add records in cart
 	@Test
 	public void postCartTest() {
-		Cart cart=new Cart(1, "abc", 2000, 2);
+		Cart cart=new Cart(1,1, "abc", 2000, 2);
 		when(cartRepository.save(cart)).thenReturn(cart);
 		assertEquals(cart, cartController.postCart(cart));
 	}
 	
 	@Test//test case for updating price
 	public void putWalletTest1() {
-		Cart cart=new Cart(1, "abc", 2000, 2 );
+		Cart cart=new Cart(1,1, "abc", 2000, 2 );
 		
 		when(cartRepository.getById((long)1)).thenReturn(cart);
 
 		double newBalance=10;
-		Cart cart1=new Cart((long)1, "abc",newBalance, 2);
+		Cart cart1=new Cart((long)1,(long)1, "abc",newBalance, 2);
 		
 		when(cartController.updateCart((long)1, cart1)).thenReturn(cart);
 		

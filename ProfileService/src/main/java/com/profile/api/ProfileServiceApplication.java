@@ -17,19 +17,17 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableOAuth2Sso
 public class ProfileServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProfileServiceApplication.class, args);
 	}
 	
-	@Bean
+	/*@Bean
 	public Docket SwaggerConfiguration() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				//.paths(PathSelectors.any())
-				
+				.paths(PathSelectors.any())
 				.apis(RequestHandlerSelectors.basePackage("com.profile.api"))
 				.build()
 				.apiInfo(apiDetails());
@@ -46,8 +44,8 @@ public class ProfileServiceApplication {
 				"http://shoppingsystem.com",
 				Collections.emptyList()
 				
-				);
+				);*/
 		
 	}
 
-}
+

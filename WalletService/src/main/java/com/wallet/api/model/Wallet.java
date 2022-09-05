@@ -15,16 +15,20 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import io.swagger.annotations.ApiModelProperty;
+
 
 @Entity
 public class Wallet {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@ApiModelProperty(notes="the id of the each Wallet is unique")
 	private Long id;
 	
 	@Column(nullable = false, unique = true)
 	private Long userId;
+	@ApiModelProperty(notes="Balance in wallet")
 	private int balance=0;
 	private boolean activate=false;
 	

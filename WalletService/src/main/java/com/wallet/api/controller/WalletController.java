@@ -17,10 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+
 import com.razorpay.*;
 import com.wallet.api.model.User;
 import com.wallet.api.model.Wallet;
 import com.wallet.api.repository.WalletRepository;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/wallet")
@@ -37,7 +41,8 @@ public class WalletController {
 	public String home() {
 		return "home.html";
 	}
-	
+	@ApiOperation(value="fetch all the wallets",
+			response=Wallet.class)
 	@GetMapping("/allWallets")// get the list of all wallets
 	public List<Wallet> getWallet() {
 		return walletRepository.findAll();
@@ -48,12 +53,17 @@ public class WalletController {
 		return walletRepository.findAll();
 	}
 	
-	
+	@ApiOperation(value="Post the wallet",
+			
+			response=Wallet.class)
 	@PostMapping("/saveWallet")// post the wallet
 	public Wallet postWallet(@RequestBody Wallet wallet) {
 		return walletRepository.save(wallet);
 	}
 	
+	@ApiOperation(value="update wallet by wallet id",
+			notes = "provide an id of the wallet and update it",
+			response=Wallet.class)
 	@PutMapping("/editWallet/{wId}")// edit the existent wallet
 	public Wallet putWallet(@PathVariable("wId") Long wId, @RequestBody Wallet wallet) {
 		Wallet wallet1=walletRepository.getById(wId);
@@ -63,6 +73,9 @@ public class WalletController {
 		return walletRepository.save(wallet1);
 	}
 	
+	@ApiOperation(value="Delete wallet by wallet id",
+			notes = "provide an id of the wallet and delete it",
+			response=Wallet.class)
 	@DeleteMapping("/deleteWallet/{wId}")// delete the existent wallet
 	public List<Wallet> deleteWallet(@PathVariable("wId") Long wId){
 		Wallet wallet1=walletRepository.getById(wId);
@@ -70,7 +83,9 @@ public class WalletController {
 		return walletRepository.findAll();
 	}
 	
-	
+	@ApiOperation(value="Fetch wallet by userId",
+			notes = "provide an id of the User and Fetch the wallet",
+			response=Wallet.class)
 	@GetMapping("/userid/{uId}")
 	public Wallet getWalletByUserId(@PathVariable("uId") Long uId) {
 		RestTemplate restTemplate=new RestTemplate();
@@ -81,6 +96,9 @@ public class WalletController {
 		return new Wallet();
 	}
 	
+	@ApiOperation(value="Post wallet by userId",
+			notes = "provide an id of the User and Post the wallet",
+			response=Wallet.class)
 	@PostMapping("/saveWallet/{uId}")// post the wallet
 	public Wallet postWallet(@RequestBody Wallet wallet, @PathVariable("uId") Long uId) {
 		
@@ -96,6 +114,9 @@ public class WalletController {
 		return new Wallet();
 	}
 	
+	@ApiOperation(value="Delete wallet by userId",
+			notes = "provide an id of the User and Delete the wallet",
+			response=Wallet.class)
 	@DeleteMapping("/deleteWallet/{uId}")// delete the existent wallet
 	public List<Wallet> deleteWalletByUserId(@PathVariable("uId") Long uId){
 		Wallet wallet1=walletRepository.getByUserId(uId);
@@ -105,7 +126,9 @@ public class WalletController {
 	
 	//****************************************************************************************
 	
-	
+	@ApiOperation(value="Fetch wallet balance by Price",
+			notes = "provide an price and Fetch the wallet balance",
+			response=Wallet.class)
 	@GetMapping("/getWalletMoney/{price}")
 	public long getWalletMoney(@PathVariable("price") Long price, Principal principal) {
 		ResponseEntity<User> temp=restTemplate
@@ -130,6 +153,8 @@ public class WalletController {
 	
 	
 	//payment gateway api
+	@ApiOperation(value="Api for Payment",
+			response=Wallet.class)
 	@PostMapping("/pay")
 	@ResponseBody
 	public String paymoneyyy(@RequestBody Map<String, Object> data) throws Exception {

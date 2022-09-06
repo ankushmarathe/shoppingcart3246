@@ -1,50 +1,75 @@
 package com.order.api.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Table(name = "order")
-public class Order {
+public class Orders {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long orderId;
+	private Long id;
+	
+	@Column(nullable = false,columnDefinition = "DATE")
 	private LocalDate orderDate;
-	private int customerId;
+	
+//	private int customerId;
+
+	
+	@Column(nullable = false)
 	private double ammountPaid;
+	
+	@Column(nullable = false)
 	private String modeOfPayment;
+	
+	@Column(nullable = false)
 	private String orderStatus;
+	
+	@Column(nullable = false)
 	private int quantity;
 	
+	@JsonManagedReference
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+					name="order_has_address",
+					joinColumns=@JoinColumn(name="order_id"),
+					inverseJoinColumns = @JoinColumn(name="customer_id")
+			)
+	private List<Address> address;
 	
-	public Order() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Order(Long orderId, LocalDate orderDate, int customerId, double ammountPaid, String modeOfPayment,
+	
+	
+	public Orders(Long id, LocalDate orderDate, double ammountPaid, String modeOfPayment,
 			String orderStatus, int quantity) {
 		super();
-		this.orderId = orderId;
+		this.id = id;
 		this.orderDate = orderDate;
-		this.customerId = customerId;
+//		this.customerId = customerId;
 		this.ammountPaid = ammountPaid;
 		this.modeOfPayment = modeOfPayment;
 		this.orderStatus = orderStatus;
 		this.quantity = quantity;
 	}
 
-	public Long getOrderId() {
-		return orderId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setOrderId(Long orderId) {
-		this.orderId = orderId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public LocalDate getOrderDate() {
@@ -55,13 +80,7 @@ public class Order {
 		this.orderDate = orderDate;
 	}
 
-	public int getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
-	}
+	
 
 	public double getAmmountPaid() {
 		return ammountPaid;
@@ -95,11 +114,12 @@ public class Order {
 		this.quantity = quantity;
 	}
 
-	@Override
-	public String toString() {
-		return "Order [orderId=" + orderId + ", orderDate=" + orderDate + ", customerId=" + customerId
-				+ ", ammountPaid=" + ammountPaid + ", modeOfPayment=" + modeOfPayment + ", orderStatus=" + orderStatus
-				+ ", quantity=" + quantity + "]";
+	public List<Address> getAddress() {
+		return address;
+	}
+
+	public void setAddress(List<Address> address) {
+		this.address = address;
 	}
 	
 	

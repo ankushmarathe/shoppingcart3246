@@ -40,7 +40,7 @@ public class MyUserDetailsService implements UserDetailsService{
 				.getForEntity("http://localhost:1200/u/user/"+username, com.wallet.api.model.User.class);
 		com.wallet.api.model.User userDB=temp.getBody();
 		
-		
+		// to get the user from our DB
 		//com.wallet.api.model.User userDB=userRepository.findByUsername(username);  
 		 if(userDB==null) throw new UsernameNotFoundException("Invalid Username");
 		 

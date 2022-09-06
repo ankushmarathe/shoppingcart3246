@@ -32,31 +32,22 @@ public class Wallet {
 	private int balance=0;
 	private boolean activate=false;
 	
-	@JsonIgnore
-	@JsonManagedReference
-	@ManyToMany()
-	@JoinTable(
-			name ="statement_list",
-			joinColumns = @JoinColumn(name="wid"),
-			inverseJoinColumns = @JoinColumn(name="sid")
-			)
-	private List<Statement> statementList;
-	
-	
+
 	
 	
 	public Wallet() {
 		super();
 	}
 	
-	public Wallet(Long id, Long userId, int balance, boolean activate, List<Statement> statementList) {
+	
+	public Wallet(Long id, Long userId, int balance, boolean activate) {
 		super();
 		this.id = id;
 		this.userId = userId;
 		this.balance = balance;
 		this.activate = activate;
-		this.statementList = statementList;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -83,19 +74,6 @@ public class Wallet {
 		this.activate = activate;
 	}
 
-	public List<Statement> getStatementList() {
-		return statementList;
-	}
-
-	public void setStatementList(List<Statement> statementList) {
-		this.statementList = statementList;
-	}
-
-	@Override
-	public String toString() {
-		return "Wallet [id=" + id + ", userId=" + userId + ", balance=" + balance + ", activate=" + activate
-				+ ", statementList=" + statementList + "]";
-	}
 	
 	
 	

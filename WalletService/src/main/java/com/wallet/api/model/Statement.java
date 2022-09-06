@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -34,22 +35,24 @@ public class Statement {
 	@Temporal(TemporalType.DATE)
 	private Date sDate;
 	
-	@JsonBackReference
-	@ManyToMany()
-	private List<Wallet> walletList;
+	@OneToOne
+	private Wallet wallet;
+	
+	
+	
 
-	public Statement(Long id, long userId, Long orderID, double paid, Date sDate, List<Wallet> walletList) {
+	public Statement() {
+		super();
+	}
+
+	public Statement(Long id, long userId, Long orderID, double paid, Date sDate, Wallet wallet) {
 		super();
 		this.id = id;
 		this.userId = userId;
 		this.orderID = orderID;
 		this.paid = paid;
 		this.sDate = sDate;
-		this.walletList = walletList;
-	}
-
-	public Statement() {
-		super();
+		this.wallet = wallet;
 	}
 
 	public Long getId() {
@@ -92,15 +95,15 @@ public class Statement {
 		this.sDate = sDate;
 	}
 
-	public List<Wallet> getWalletList() {
-		return walletList;
+	public Wallet getWallet() {
+		return wallet;
 	}
 
-	public void setWalletList(List<Wallet> walletList) {
-		this.walletList = walletList;
+	public void setWallet(Wallet wallet) {
+		this.wallet = wallet;
 	}
 	
-	
+
 	
 	
 }

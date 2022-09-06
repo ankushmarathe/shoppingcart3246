@@ -3,32 +3,32 @@ package com.shoppingcartgateway.api.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+//import javax.persistence.Id;
 
 import io.swagger.annotations.ApiModelProperty;
 
-@Entity
+//@Entity
 public class User {
 
 	// user table coloumn entites
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	@ApiModelProperty(notes="the id of the each product is unique")
 	private int profileId;
 
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	@ApiModelProperty(notes="Name of user")
 	private String fullName;
 
 	@ApiModelProperty(notes="Mobile no of user")
 	private String mobilenumber;
 
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	@ApiModelProperty(notes="Role of user")
 	private String role;
 	@ApiModelProperty(notes="Gender of user")
@@ -40,7 +40,7 @@ public class User {
 	@ApiModelProperty(notes="DOB of user")
 	private LocalDate dateOfBirth;
 	@ApiModelProperty(notes="Gmail of user")
-	@Column(nullable = false)
+//	@Column(nullable = false)
 	private String emailId;
 	@ApiModelProperty("Username of user")
 	private String username;

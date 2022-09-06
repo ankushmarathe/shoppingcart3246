@@ -1,5 +1,8 @@
 package com.wallet.api.controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,26 +18,40 @@ import org.springframework.web.bind.annotation.RestController;
 import com.wallet.api.model.Statement;
 import com.wallet.api.model.Wallet;
 import com.wallet.api.repository.StatementRepository;
+import com.wallet.api.repository.WalletRepository;
 
 @RestController
-@RequestMapping("/statement")
+@RequestMapping("/wallet/statement")
 public class StatementController {
 
 	@Autowired
 	private StatementRepository statementRepository;
 	
-	@GetMapping("/allStatements")
+	@Autowired
+	WalletRepository walletRepository;
+	
+	@GetMapping("/allStatements")// get all statements
 	public List<Statement> getStatements() {
 		return statementRepository.findAll();
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/{id}")// get statement by id
 	public Statement getStatementById(@PathVariable("id") Long id) {
 		return statementRepository.getById(id);
 	}
 	
-	@PostMapping("/saveStatement")// post the statement
-	public Statement postWallet(@RequestBody Statement statement) {
+	@PostMapping("/saveStatement/{wId}")// post the statement
+	public Statement postWallet(@RequestBody Statement statement,@PathVariable("wId") Long wId) {
+		Wallet wallet1=walletRepository.getById(wId);
+		
+		LocalDate ld=LocalDate.now();
+		Date dt=new Date();
+		dt=Date.from(ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+		
+		
+		statement.setsDate(dt);
+		statement.setWallet(wallet1);
+		
 		return statementRepository.save(statement);
 	}
 

@@ -22,7 +22,6 @@ import com.profile.api.utils.EncrytedPasswordUtil;
 
 
 
-
 @Repository
 @Transactional
 public class AppUserDAO {

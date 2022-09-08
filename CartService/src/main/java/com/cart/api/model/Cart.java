@@ -1,6 +1,7 @@
 package com.cart.api.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -8,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -26,9 +30,25 @@ private String productName;
 private Double price;
 @ApiModelProperty(notes="the number of item of specific product in cart")
 private int quantity;
+@ManyToMany
+@JoinTable(
+		name = "cart_items",
+		joinColumns = @JoinColumn(name="cartId"),
+		inverseJoinColumns=@JoinColumn(name="itemId")
+		)
+private List<Items> items;
 
 
 
+public Cart(Long id, Long userId, String productName, Double price, int quantity, List<Items> items) {
+	super();
+	this.id = id;
+	this.userId = userId;
+	this.productName = productName;
+	this.price = price;
+	this.quantity = quantity;
+	this.items = items;
+}
 public Cart() {
 	super();
 	// TODO Auto-generated constructor stub
@@ -71,6 +91,14 @@ public int getQuantity() {
 }
 public void setQuantity(int quantity) {
 	this.quantity = quantity;
+}
+
+
+public List<Items> getItems() {
+	return items;
+}
+public void setItems(List<Items> items) {
+	this.items = items;
 }
 @Override
 public int hashCode() {

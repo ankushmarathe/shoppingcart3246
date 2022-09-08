@@ -30,6 +30,7 @@ import com.profile.api.service.ConnectionSignUpImp;
 
 
 @Order(1000)
+
 @Configuration
 @EnableSocial
 @PropertySource("classpath:social-cfg.properties")
@@ -50,13 +51,9 @@ public class SocialConfig implements SocialConfigurer {
             this.autoSignUp = false;
         }
         
-		
-		 FacebookConnectionFactory ffactory = new
-		  FacebookConnectionFactory(env.getProperty("facebook.app.id"),
-		  env.getProperty("facebook.app.secret"));
-		  ffactory.setScope(env.getProperty("facebook.scope"));
-		  cfConfig.addConnectionFactory(ffactory);
-		 
+        FacebookConnectionFactory ffactory = new FacebookConnectionFactory(env.getProperty("facebook.app.id"), env.getProperty("facebook.app.secret"));
+        ffactory.setScope(env.getProperty("facebook.scope"));
+        cfConfig.addConnectionFactory(ffactory);
         
         GoogleConnectionFactory gfactory = new GoogleConnectionFactory(env.getProperty("google.client.id"), env.getProperty("google.client.secret"));
         gfactory.setScope(env.getProperty("google.scope"));

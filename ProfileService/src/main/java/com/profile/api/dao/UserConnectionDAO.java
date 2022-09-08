@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 import com.profile.api.model.UserConnection;
 
-
 @Repository
 @Transactional
 public class UserConnectionDAO {

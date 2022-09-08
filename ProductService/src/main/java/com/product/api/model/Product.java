@@ -49,6 +49,12 @@ public class Product {
 		this.description = description;
 		this.specification = specification;
 	}
+	
+	public Product() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getId() {
 		return id;
 	}

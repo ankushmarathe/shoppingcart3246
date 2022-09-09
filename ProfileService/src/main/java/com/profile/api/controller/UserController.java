@@ -4,7 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.profile.api.model.AppUser;
+
+import com.profile.api.model.User;
 import com.profile.api.repository.UserRepository;
 
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:4200/"})
 public class UserController {
 
 	@Autowired
@@ -46,18 +48,24 @@ public class UserController {
 		return "Hi "+principal.getName()+" welcome ";
 	}
 	
-	/*
-	 * @PostMapping("/users")
-	 * 
-	 * @ApiOperation(value="registration of new user", response=User.class) public
-	 * User adduser(@RequestBody User user) { //String passEncoded =
-	 * passwordEncoder.encode(user.getPassword()); //user.setPassword(passEncoded);
-	 * return userRepository.save(user); }
-	 */
+	
+	  @PostMapping("/users")
+	 public User adduser(@RequestBody User user) { 
+		
+	    user.setRole("user");
+	  return userRepository.save(user); }
+	  
+	  @PostMapping("/admin")
+		 public User addadmin(@RequestBody User user) { 
+			
+		    user.setRole("admin");
+		  return userRepository.save(user); 
+		  }
+	
 
 	// get method to get all users list
 	@GetMapping("/user1")
-	public List<AppUser> getalluser() {
+	public List<User> getalluser() {
 
 		return userRepository.findAll();
 	}
@@ -70,9 +78,9 @@ public class UserController {
 
 	
 	@GetMapping("/user/{username}")
-	public AppUser getByUsername(@PathVariable("username") String username) {
+	public User getByUsername(@PathVariable("username") String username) {
 		
-		AppUser user= userRepository.findByUsername(username);
+		User user= userRepository.findByUsername(username);
 	    
 		return user;	
 	}
@@ -87,27 +95,27 @@ public class UserController {
 	 */
 	
 	@GetMapping("/user/{id}")
-	public AppUser getByUserId(@PathVariable("id") long id) {
+	public User getByUserId(@PathVariable("id") long id) {
 		
-		AppUser user= userRepository.getById(id);
+		User user= userRepository.getById(id);
 	
 		return user;
 	}
 	
 	// put method to update user according to user ID
 	@PutMapping("/user/update/{uid}")
-	public AppUser updateuser(@PathVariable("uid") Long uid, @RequestBody AppUser newuser) {
+	public User updateuser(@PathVariable("uid") Long uid, @RequestBody User newuser) {
 
-		AppUser userDB = userRepository.getById(uid);
+		User userDB = userRepository.getById(uid);
 
-		if (newuser.getFirstName() != null)
-			userDB.setFirstName(newuser.getFirstName());
+		if (newuser.getFirstname() != null)
+			userDB.setFirstname(newuser.getFirstname());
 
-		if (newuser.getLastName() != null)
-			userDB.setLastName(newuser.getLastName());
+		if (newuser.getLastname() != null)
+			userDB.setLastname(newuser.getLastname());
 		
-		if (newuser.getUserName() != null)
-			userDB.setUserName(newuser.getUserName());
+		if (newuser.getUsername() != null)
+			userDB.setUsername(newuser.getUsername());
 
 		/*
 		 * if (newuser.getMobilenumber() != null)

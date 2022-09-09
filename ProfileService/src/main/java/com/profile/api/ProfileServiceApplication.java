@@ -17,7 +17,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 @SpringBootApplication
 @EnableEurekaClient
-@EnableSocial
 public class ProfileServiceApplication {
 
 	public static void main(String[] args) {

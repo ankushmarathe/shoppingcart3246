@@ -29,7 +29,7 @@ public class Statement {
 	@Column(nullable = false)
 	private long userId;
 	@Column(nullable = false)
-	private Long orderID;
+	private String orderID;
 	@Column(nullable = false)
 	private double paid;
 	@Temporal(TemporalType.DATE)
@@ -45,7 +45,7 @@ public class Statement {
 		super();
 	}
 
-	public Statement(Long id, long userId, Long orderID, double paid, Date sDate, Wallet wallet) {
+	public Statement(Long id, long userId, String orderID, double paid, Date sDate, Wallet wallet) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -71,11 +71,11 @@ public class Statement {
 		this.userId = userId;
 	}
 
-	public Long getOrderID() {
+	public String getOrderID() {
 		return orderID;
 	}
 
-	public void setOrderID(Long orderID) {
+	public void setOrderID(String orderID) {
 		this.orderID = orderID;
 	}
 

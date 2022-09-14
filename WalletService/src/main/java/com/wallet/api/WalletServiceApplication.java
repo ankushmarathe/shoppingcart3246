@@ -5,6 +5,7 @@ import java.util.Collections;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +21,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EntityScan(basePackages = {"com.wallet.api.model"})  
-@SpringBootApplication
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
 @EnableEurekaClient
 @EnableSwagger2
 public class WalletServiceApplication {

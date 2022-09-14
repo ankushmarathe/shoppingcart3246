@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import com.wallet.api.repository.WalletRepository;
 
 @RestController
 @RequestMapping("/wallet/statement")
+@CrossOrigin(origins = { "http://localhost:4200/" })
 public class StatementController {
 
 	@Autowired
@@ -35,7 +37,7 @@ public class StatementController {
 		return statementRepository.findAll();
 	}
 	
-	@GetMapping("/{id}")// get statement by id
+	@GetMapping("/getStatementById/{id}")// get statement by id
 	public Statement getStatementById(@PathVariable("id") Long id) {
 		return statementRepository.getById(id);
 	}
@@ -48,7 +50,8 @@ public class StatementController {
 		Date dt=new Date();
 		dt=Date.from(ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 		
-		
+		statement.setUserId(wallet1.getUserId());
+		statement.setOrderID("");
 		statement.setsDate(dt);
 		statement.setWallet(wallet1);
 		
@@ -63,5 +66,12 @@ public class StatementController {
 		return statementRepository.findAll();
 	}
 	
+	
+	@GetMapping("/get/{id}")// get statement by id
+	public List<Statement> getStatement(@PathVariable("id") Long id) {
+		Wallet wallet1=walletRepository.getById(id);
+		List<Statement> sList=statementRepository.getStatementByWallet(wallet1.getId());
+		return sList;
+	}
 	
 }

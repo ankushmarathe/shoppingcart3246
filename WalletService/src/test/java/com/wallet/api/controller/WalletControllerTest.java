@@ -29,9 +29,9 @@ public class WalletControllerTest {
 	public void aTest1() {
 		List<Wallet> walletList1=new ArrayList<>();
 		
-		walletList1.add(new Wallet((long)1, (long)1, 0, false)) ;
-		walletList1.add(new Wallet((long)2, (long)3, 0, false)) ;
-		walletList1.add(new Wallet((long)3, (long)5, 0, false)) ;
+		walletList1.add(new Wallet((long)1, (long)1, 0, 0)) ;
+		walletList1.add(new Wallet((long)2, (long)3, 0, 0)) ;
+		walletList1.add(new Wallet((long)3, (long)5, 0, 0)) ;
 		
 		when(walletRepository.findAll()).thenReturn(walletList1);
 		
@@ -52,9 +52,9 @@ public class WalletControllerTest {
 	public void getWalletsTest1() {
 		List<Wallet> walletList1=new ArrayList<>();
 		
-		walletList1.add(new Wallet((long)1, (long)1, 0, false)) ;
-		walletList1.add(new Wallet((long)2, (long)3, 0, false)) ;
-		walletList1.add(new Wallet((long)3, (long)5, 0, false)) ;
+		walletList1.add(new Wallet((long)1, (long)1, 0, 0)) ;
+		walletList1.add(new Wallet((long)2, (long)3, 0, 0)) ;
+		walletList1.add(new Wallet((long)3, (long)5, 0, 0)) ;
 		
 		when(walletRepository.findAll()).thenReturn(walletList1);
 		
@@ -72,7 +72,7 @@ public class WalletControllerTest {
 	
 	@Test//test case for post(saving) wallet
 	public void postWalletTest1() {
-		Wallet wallet=new Wallet((long)3, (long)5, 0, false);
+		Wallet wallet=new Wallet((long)3, (long)5, 0, 0);
 		
 		when(walletRepository.save(wallet)).thenReturn(wallet);
 		
@@ -81,12 +81,12 @@ public class WalletControllerTest {
 	
 	@Test//test case for updating balance
 	public void putWalletTest1() {
-		Wallet wallet=new Wallet((long)1, (long)5, 0, false);
+		Wallet wallet=new Wallet((long)1, (long)5, 0, 0);
 		
 		when(walletRepository.getById((long)1)).thenReturn(wallet);
 
 		int newBalance=10;
-		Wallet wallet1=new Wallet((long)0, (long)0, newBalance, false);
+		Wallet wallet1=new Wallet((long)0, (long)0, newBalance, 0);
 		
 		when(walletController.putWallet((long)1, wallet1)).thenReturn(wallet);
 		
@@ -95,7 +95,7 @@ public class WalletControllerTest {
 	
 	@Test//test case for delete wallet
 	public void deleteWalletTest1() {
-		Wallet wallet=new Wallet((long)1, (long)5, 0, false);
+		Wallet wallet=new Wallet((long)1, (long)5, 0, 0);
 
 		when(walletRepository.getById((long)1)).thenReturn(wallet);
 		

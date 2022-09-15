@@ -52,7 +52,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 						.antMatchers(HttpMethod.GET,"/wallet/allWallets").permitAll()
-						.antMatchers(HttpMethod.POST,"/wallet/saveWallet").authenticated()
+						.antMatchers(HttpMethod.POST,"/wallet/saveWallet").permitAll()
+						.antMatchers(HttpMethod.GET,"/wallet/statement/allStatements").permitAll()
+						
+						.antMatchers(HttpMethod.POST,"/wallet/statement/saveStatement/**").permitAll()
 						.antMatchers(HttpMethod.PUT,"/wallet/editWallets").authenticated()
 						.antMatchers(HttpMethod.DELETE,"/wallet/deleteWallet").authenticated()
 						.antMatchers(HttpMethod.GET,"/wallet/u/**").permitAll()

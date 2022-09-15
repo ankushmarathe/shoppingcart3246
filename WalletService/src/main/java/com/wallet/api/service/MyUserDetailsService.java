@@ -37,7 +37,7 @@ public class MyUserDetailsService implements UserDetailsService{
 		
 		// checking the details by making call to profile service because it is managing all the users.
 		ResponseEntity<com.wallet.api.model.User> temp=restTemplate
-				.getForEntity("http://localhost:1200/u/user/"+username, com.wallet.api.model.User.class);
+				.getForEntity("http://localhost:1001/user/u/"+username, com.wallet.api.model.User.class);
 		com.wallet.api.model.User userDB=temp.getBody();
 		
 		// to get the user from our DB
@@ -49,7 +49,7 @@ public class MyUserDetailsService implements UserDetailsService{
 		 SimpleGrantedAuthority sga=new SimpleGrantedAuthority(userDB.getRole());
 		 list.add(sga);
 		 
-		 User springuser=new User(userDB.getUsername(),userDB.getPassword(),list);
+		 User springuser=new User(userDB.getUsername(),userDB.getencrytedPassword(),list);
 		return  springuser;
 	}
 

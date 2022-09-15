@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/wallet")
+@CrossOrigin(origins = { "http://localhost:4200/" })
 public class WalletController {
 
 	@Autowired
@@ -62,6 +64,12 @@ public class WalletController {
 	@GetMapping("/allWallets")// get the list of all wallets
 	public List<Wallet> getWallet() {
 		return walletRepository.findAll();
+	}
+	
+	@GetMapping("/getBalance/{uid}")
+	public Long getbalance(@PathVariable("uid") Long uId) {
+		Wallet wallet=walletRepository.getByUserId(uId);
+		return (long)wallet.getBalance();
 	}
 	
 	@GetMapping("/a")
@@ -117,20 +125,22 @@ public class WalletController {
 	@ApiOperation(value="Post wallet by userId",
 			notes = "provide an id of the User and Post the wallet",
 			response=Wallet.class)
-	@PostMapping("/saveWallet/{uId}")// post the wallet
-	public Wallet postWallet(@RequestBody Wallet wallet, @PathVariable("uId") Long uId) {
+	@GetMapping("/saveWallet/{uId}")// post the wallet
+	public Wallet postWallet(@PathVariable("uId") Long uId) {
 		
-		RestTemplate restTemplate=new RestTemplate();
+		//RestTemplate restTemplate=new RestTemplate();
 		
 		// calling profile service to check if user is present
-		User user=restTemplate.getForObject("http://localhost:1000/user/"+uId, User.class);
+		//User user=restTemplate.getForObject("http://localhost:1000/user/"+uId, User.class);
 		
-		if(user!=null) {
-			wallet.setUserId(uId);
+		//if(user!=null) {
+			//wallet.setUserId(uId);
+		Wallet wallet=new Wallet();
+		wallet.setUserId(uId);
 			return walletRepository.save(wallet);
-		}
-		
-		return new Wallet();
+//		}
+//		
+//		return new Wallet();
 	}
 	
 	@ApiOperation(value="Delete wallet by userId",
@@ -146,13 +156,22 @@ public class WalletController {
 	@ApiOperation(value="Activate wallet",
 			notes = "provide an id of wallet and activate the wallet",
 			response=Wallet.class)
-	@PutMapping("/activate/{wId}")// activate the existent wallet
-	public Wallet activateWallet(@PathVariable("wId") Long wId) {
+	@GetMapping("/activate/{wId}")// activate the existent wallet
+	public void activateWallet(@PathVariable("wId") Long wId) {
 		Wallet wallet1=walletRepository.getById(wId);
 		
-		if(wallet1.isActivate()) wallet1.setActivate(true);
+		if(wallet1.isActivate()==0) wallet1.setActivate(1);
 
-		return walletRepository.save(wallet1);
+		walletRepository.save(wallet1);
+	}
+	
+	@GetMapping("/deactivate/{wId}")// activate the existent wallet
+	public void deactivateWallet(@PathVariable("wId") Long wId) {
+		Wallet wallet1=walletRepository.getById(wId);
+		
+		if(wallet1.isActivate()==1) wallet1.setActivate(0);
+
+		walletRepository.save(wallet1);
 	}
 	
 	
@@ -181,7 +200,7 @@ public class WalletController {
 		}
 		
 		Wallet wallet=walletRepository.getByUserId((long)userDB.getUserId());
-		if(!wallet.isActivate()) return 0;
+		if(wallet.isActivate()==0) return 0;
 		
 		long temp1=price/10;
 		
@@ -197,9 +216,9 @@ public class WalletController {
 	//payment gateway api
 	@ApiOperation(value="Api for Payment",
 			response=Wallet.class)
-	@PostMapping("/pay")
+	@PostMapping("/pay/{wid}")
 	@ResponseBody
-	public String paymoneyyy(@RequestBody Map<String, Object> data, Principal principle) throws Exception {
+	public String paymoneyyy(@RequestBody Map<String, Object> data, @PathVariable("wid") Long wid) throws Exception {
 		System.out.println ("--------------------------------------------------------------------");
 
 		int amt=Integer.parseInt(data.get("amount").toString ());
@@ -215,24 +234,23 @@ public class WalletController {
 		System.out.println (order) ;
 		
 		
+	
+		Wallet wallet=walletRepository.getById(wid);
 		
-//		ResponseEntity<com.wallet.api.model.User> temp=restTemplate
-//				.getForEntity("http://localhost:1200/u/user/"+principle.getName(), User.class);
-//		User userDB=temp.getBody();
-//		
-//		
-//		Wallet wallet=walletRepository.getByUserId((long)userDB.getUserId());
-//		
-//		Statement statement=new Statement();
-//		
-//		LocalDate ld=LocalDate.now();
-//		Date dt=new Date();
-//		dt=Date.from(ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-//		
-//		
-//		statement.setsDate(dt);
-//		statement.setPaid(amt);
-//		
+		Statement statement=new Statement();
+		
+		statement.setUserId(wallet.getUserId());
+		statement.setOrderID("");
+		statement.setPaid(amt);
+		statement.setWallet(wallet);
+		
+		LocalDate ld=LocalDate.now();
+		Date dt=new Date();
+		dt=Date.from(ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+		
+		statement.setsDate(dt);
+		statementRepository.save(statement);
+		
 		
 		return order.toString();
 	}

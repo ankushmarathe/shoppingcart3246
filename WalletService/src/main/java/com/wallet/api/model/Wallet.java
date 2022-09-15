@@ -30,7 +30,7 @@ public class Wallet {
 	private Long userId;
 	@ApiModelProperty(notes="Balance in wallet")
 	private int balance=0;
-	private boolean activate=false;
+	private int activate=0;
 	
 
 	
@@ -40,7 +40,7 @@ public class Wallet {
 	}
 	
 	
-	public Wallet(Long id, Long userId, int balance, boolean activate) {
+	public Wallet(Long id, Long userId, int balance, int activate) {
 		super();
 		this.id = id;
 		this.userId = userId;
@@ -67,10 +67,10 @@ public class Wallet {
 	public void setBalance(int balance) {
 		this.balance = balance;
 	}
-	public boolean isActivate() {
+	public int isActivate() {
 		return activate;
 	}
-	public void setActivate(boolean activate) {
+	public void setActivate(int activate) {
 		this.activate = activate;
 	}
 

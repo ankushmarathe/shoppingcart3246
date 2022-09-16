@@ -42,24 +42,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-
+<<<<<<< HEAD
 						.antMatchers(HttpMethod.GET,"/cart/allcart").permitAll()
 						.antMatchers(HttpMethod.GET,"/cart/item/**").permitAll()
-
+=======
 						.antMatchers(HttpMethod.GET,"/cart/allcart").authenticated()
-
+>>>>>>> 66bbf70cf8719265c64a4e99132c7fcb8463a66f
 						.antMatchers(HttpMethod.POST,"/cart/user").permitAll()
 						.antMatchers(HttpMethod.POST,"/cart/saveItem/**").permitAll()
 						.antMatchers(HttpMethod.GET,"/cart/user/**").authenticated()
 						.antMatchers(HttpMethod.POST,"/cart/addcart").permitAll()
 						.antMatchers(HttpMethod.PUT,"/updatecart/**").authenticated()
 						.antMatchers(HttpMethod.DELETE,"/cart/deletecart/**").authenticated()
-
+<<<<<<< HEAD
 						.antMatchers(HttpMethod.POST,"/cart/sms").permitAll()
-
+						
+=======
 
 						.antMatchers(HttpMethod.GET,"/allcart").authenticated()
-
+>>>>>>> 66bbf70cf8719265c64a4e99132c7fcb8463a66f
 						.anyRequest().permitAll()
 						.and().httpBasic()
 						.and().csrf().disable();

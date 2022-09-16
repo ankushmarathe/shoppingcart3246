@@ -8,19 +8,20 @@ import com.cart.api.model.SmsModel;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
+
+
 @RestController
 public class SmsController {
 	
 	@Autowired
 	SmsService smsService;
 	@PostMapping("/sms")
-	public void postSms()
+	public void postSms(@RequestBody SmsModel sms)
 	{
-		smsService.send();
+		smsService.send(sms);
 	}
 	
 	
 	
 
-}
 */

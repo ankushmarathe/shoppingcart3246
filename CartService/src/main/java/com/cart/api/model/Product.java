@@ -1,4 +1,4 @@
-package com.product.api.model;
+package com.cart.api.model;
 
 
 import javax.persistence.Entity;

@@ -5,9 +5,10 @@ import java.util.Collections;
 import org.hibernate.mapping.Collection;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.pattern.PathPatternRouteMatcher;
 
 import springfox.documentation.builders.PathSelectors;
@@ -25,6 +26,17 @@ public class CartServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CartServiceApplication.class, args);
 	}
+	
+	@Bean
+	public RestTemplate getRestTemplate() {
+		return new  RestTemplate();
+	}
+	
+	@Bean
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+	    return builder.build();
+	}
+	
 	
 	@Bean
 	public Docket SwaggerConfiguration() {

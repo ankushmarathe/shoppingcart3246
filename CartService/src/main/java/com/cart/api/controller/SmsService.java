@@ -1,4 +1,4 @@
-/*package com.cart.api.controller;
+package com.cart.api.controller;
 
 import org.springframework.stereotype.Component;
 
@@ -13,18 +13,18 @@ public class SmsService {
 	
 	private final String ACCOUNT_SID ="AC2319c56e6f68874cce7bcfd2471c4b3e";
 
-    private final String AUTH_TOKEN = "efb5c52cc7de8148d62e97ee09ee1452";
+    private final String AUTH_TOKEN = "c60149ef08d88285600badf1724ef92a";
 
     private final String FROM_NUMBER = "+12535232576";
 
-    public void send() {
+    public void send(SmsModel sms) {
     	Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
-        Message message = Message.creator(new PhoneNumber("+919604608996"), new PhoneNumber(FROM_NUMBER), "order placed")
+        Message message = Message.creator(new PhoneNumber(sms.getTo()), new PhoneNumber(FROM_NUMBER), sms.getMessage())
                 .create();
         System.out.println("here is my id:"+message.getSid());// Unique resource ID created to manage this transaction
 
     }
 
 
-}*/
+}

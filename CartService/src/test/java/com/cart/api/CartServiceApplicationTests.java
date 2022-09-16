@@ -30,7 +30,7 @@ class CartServiceApplicationTests {
    public List<Cart> cartList;
 
    //checking the all records in cart
-	@Test
+/*	@Test
 	public void getCartTest() {
 		when(cartRepository.findAll()).thenReturn(Stream.of(new Cart(1,1, "abc", 2000, 2 ),new Cart(2,2, "bnm", 3000, 1))
 				.collect(Collectors.toList()));
@@ -81,6 +81,6 @@ class CartServiceApplicationTests {
 	}
 	
 	
-	
+	*/
 	
 }

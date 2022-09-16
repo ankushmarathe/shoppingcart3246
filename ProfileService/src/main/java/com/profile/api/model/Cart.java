@@ -1,4 +1,4 @@
-package com.cart.api.model;
+package com.profile.api.model;
 
 import java.util.ArrayList;
 import java.util.List;

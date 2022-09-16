@@ -77,6 +77,13 @@ public class WalletController {
 		return walletRepository.findAll();
 	}
 	
+	@GetMapping("/{uid}")
+	public Long getWalletIdByUserId(@PathVariable("uid") Long uId) {
+		Wallet wallet=walletRepository.getByUserId(uId);
+		return wallet.getId();
+	}
+	
+		
 	@ApiOperation(value="Post the wallet",
 			
 			response=Wallet.class)
@@ -188,27 +195,19 @@ public class WalletController {
 	@ApiOperation(value="Fetch wallet balance by Price",
 			notes = "provide an price and Fetch the wallet balance",
 			response=Wallet.class)
-	@GetMapping("/getWalletMoney/{price}")// subtracting wallet money from total
-	public long getWalletMoney(@PathVariable("price") Long price, Principal principal) {
-		// calling profile service to check if user is present
-		ResponseEntity<User> temp=restTemplate
-				.getForEntity("http://localhost:1200/u/user/"+principal.getName(), User.class);
-		User userDB=temp.getBody();
+	@GetMapping("/getWalletMoney/{wId}/{amount}")// subtracting wallet money from total
+	public long getWalletMoney(@PathVariable("amount") Long amount, @PathVariable("wId") Long wId) {
 		
-		if(userDB==null) {
-			return 0;
-		}
+		Wallet wallet=walletRepository.getById(wId);
 		
-		Wallet wallet=walletRepository.getByUserId((long)userDB.getUserId());
-		if(wallet.isActivate()==0) return 0;
-		
-		long temp1=price/10;
+		long temp1=amount/10;
+		if(wallet.isActivate()==0 || wallet.getBalance()<temp1) return amount;
 		
 		// According to price of products wallet money is subtracting from total amount
-		if(price<500) return price-temp1;
-		if(price<1500) return price-(temp1+(temp1/2));
-		if(price<4000) return price-(2*temp1);
-		return price-(3*temp1);
+		if(amount<500) return amount-temp1;
+		if(amount<1500) return amount-(temp1+(temp1/2));
+		if(amount<4000) return amount-(2*temp1);
+		return amount-(3*temp1);
 	}
 	
 	

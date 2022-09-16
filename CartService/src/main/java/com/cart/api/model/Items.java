@@ -7,23 +7,39 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
+
 
 @Entity
 public class Items {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long Id;
 	private Long productId;
-	private String productName;
-	private double price;
-	private int quantity;
-	@ManyToMany(mappedBy ="items" )
-	private List<Cart> cart;
-	public Items(Long productId, String productName, double price, int quantity) {
+	//private String productName;
+	
+	//private double price;
+	//private int quantity=1;
+	//private int quantity;
+	//@ManyToMany(mappedBy ="items" )
+	//private List<Cart> cart;
+	@OneToOne
+	private Cart cart;
+	public Items(Long id, Long productId, Cart cart) {
 		super();
+		Id = id;
 		this.productId = productId;
-		this.productName = productName;
-		this.price = price;
-		this.quantity = quantity;
+		this.cart = cart;
+	}
+	public Items() {
+		super();
+	}
+	public Long getId() {
+		return Id;
+	}
+	public void setId(Long id) {
+		Id = id;
 	}
 	public Long getProductId() {
 		return productId;
@@ -31,24 +47,17 @@ public class Items {
 	public void setProductId(Long productId) {
 		this.productId = productId;
 	}
-	public String getProductName() {
-		return productName;
+	public Cart getCart() {
+		return cart;
 	}
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public void setCart(Cart cart) {
+		this.cart = cart;
 	}
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) {
-		this.price = price;
-	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
+	
+	
+	
+	
+	
 	
 	
 	

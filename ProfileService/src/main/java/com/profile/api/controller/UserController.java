@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-
+import org.springframework.web.client.RestTemplate;
 import com.profile.api.model.User;
 import com.profile.api.repository.UserRepository;
 
@@ -26,6 +25,8 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	RestTemplate restTemplate=new RestTemplate();
 
 	
 	
@@ -55,6 +56,11 @@ public class UserController {
 	 public User adduser(@RequestBody User user) { 
 		
 	    user.setRole("user");
+	    
+	    restTemplate.getForObject("http://localhost:1000/wallet/saveWallet/"+user.getUserId(), com.profile.api.model.Wallet.class);
+	    restTemplate.getForObject("http://localhost:1000/cart/addcart/"+user.getUserId(), com.profile.api.model.Cart.class);
+		
+	    
 	  return userRepository.save(user); }
 	  
 	  @PostMapping("/admin")

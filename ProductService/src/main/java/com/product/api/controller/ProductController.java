@@ -43,6 +43,11 @@ public class ProductController {
 		
 		
 	}
+	@GetMapping("/product/cart/{pId}")
+	public Product getProduct(@PathVariable("pId") Long pId) {
+		return productRepository.getById(pId);
+		
+	}
 	
 	@GetMapping("/product/{cid}")
 	public List<ProductDto> getAllProducts(@PathVariable("cid") Long cid) {

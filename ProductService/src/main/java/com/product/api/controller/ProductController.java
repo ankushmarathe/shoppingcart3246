@@ -33,6 +33,12 @@ public class ProductController {
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
+	@PostMapping("/product")
+	public Product postProduct(@RequestBody Product product) {
+		return productRepository.save(product);
+		
+	}
+	
 	@PostMapping("/product/{cid}")
 	public Product postProduct(@PathVariable("cid") Long cid,
 			@RequestBody Product product) {

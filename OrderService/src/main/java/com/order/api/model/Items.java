@@ -1,49 +1,40 @@
 package com.order.api.model;
+import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Items {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long itemId;
-	
-	@Column(nullable = false)
+	private Long productId;
 	private String productName;
-	
-	@Column(nullable = false)
 	private double price;
-	
-	@Column(nullable = false)
 	private int quantity;
 
-	@OneToOne
-	private Cart cart;
-	
-	@OneToOne
-	private Product product;
-	
+	@ManyToMany(mappedBy ="items" )
+	private List<Cart> cart;
 
-	public Items(Long itemId, String productName, double price, int quantity) {
+	public Items(Long productId, String productName, double price, int quantity, List<Cart> cart) {
 		super();
-		this.itemId = itemId;
+		this.productId = productId;
 		this.productName = productName;
 		this.price = price;
 		this.quantity = quantity;
+		this.cart = cart;
 	}
 
-	public Long getItemId() {
-		return itemId;
+	public Long getProductId() {
+		return productId;
 	}
 
-	public void setItemId(Long itemId) {
-		this.itemId = itemId;
+	public void setProductId(Long productId) {
+		this.productId = productId;
 	}
 
 	public String getProductName() {
@@ -70,11 +61,15 @@ public class Items {
 		this.quantity = quantity;
 	}
 
-	@Override
-	public String toString() {
-		return "Items [itemId=" + itemId + ", productName=" + productName + ", price=" + price + ", quantity="
-				+ quantity + "]";
+	public List<Cart> getCart() {
+		return cart;
 	}
+
+	public void setCart(List<Cart> cart) {
+		this.cart = cart;
+	}
+
+	
 	
 	
 	

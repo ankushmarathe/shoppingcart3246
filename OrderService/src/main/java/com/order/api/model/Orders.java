@@ -23,10 +23,13 @@ public class Orders {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@Column(nullable = false,unique = true)
+	private Long userId;
+	
 	@Column(nullable = false,columnDefinition = "DATE")
 	private LocalDate orderDate;
 	
-//	private int customerId;
+	
 
 	
 	@Column(nullable = false)
@@ -41,27 +44,24 @@ public class Orders {
 	@Column(nullable = false)
 	private int quantity;
 	
-	@JsonManagedReference
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-					name="order_has_address",
-					joinColumns=@JoinColumn(name="order_id"),
-					inverseJoinColumns = @JoinColumn(name="customer_id")
-			)
-	private List<Address> address;
-	
-	
-	
-	public Orders(Long id, LocalDate orderDate, double ammountPaid, String modeOfPayment,
-			String orderStatus, int quantity) {
+	private Address address;
+
+	public Orders() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Orders(Long id, Long userId, LocalDate orderDate, double ammountPaid, String modeOfPayment,
+			String orderStatus, int quantity, Address address) {
 		super();
 		this.id = id;
+		this.userId = userId;
 		this.orderDate = orderDate;
-//		this.customerId = customerId;
 		this.ammountPaid = ammountPaid;
 		this.modeOfPayment = modeOfPayment;
 		this.orderStatus = orderStatus;
 		this.quantity = quantity;
+		this.address = address;
 	}
 
 	public Long getId() {
@@ -72,6 +72,14 @@ public class Orders {
 		this.id = id;
 	}
 
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 	public LocalDate getOrderDate() {
 		return orderDate;
 	}
@@ -79,8 +87,6 @@ public class Orders {
 	public void setOrderDate(LocalDate orderDate) {
 		this.orderDate = orderDate;
 	}
-
-	
 
 	public double getAmmountPaid() {
 		return ammountPaid;
@@ -114,13 +120,14 @@ public class Orders {
 		this.quantity = quantity;
 	}
 
-	public List<Address> getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(List<Address> address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
+
 	
 	
 }

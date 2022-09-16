@@ -1,6 +1,6 @@
 package com.order.api.model;
 
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,46 +9,77 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class Product {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long productId;
-	
-	@Column(nullable = false)
-	private String name;
+	private Long id;
+	private String title;
+	private double price;
+	private String shortDescription;
+	private String description;
 	
 	@OneToOne
-	private Orders orders;
-	
-	
+	private Category category;
 
-	public Product(Long productId, String name) {
+	public Product(Long id, String title, double price, String shortDescription, String description,
+			Category category) {
 		super();
-		this.productId = productId;
-		this.name = name;
+		this.id = id;
+		this.title = title;
+		this.price = price;
+		this.shortDescription = shortDescription;
+		this.description = description;
+		this.category = category;
 	}
 
-	public Long getProductId() {
-		return productId;
+	public Long getId() {
+		return id;
 	}
 
-	public void setProductId(Long productId) {
-		this.productId = productId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	@Override
-	public String toString() {
-		return "Product [productId=" + productId + ", name=" + name + "]";
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getShortDescription() {
+		return shortDescription;
+	}
+
+	public void setShortDescription(String shortDescription) {
+		this.shortDescription = shortDescription;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	
 	
-	
+
 }

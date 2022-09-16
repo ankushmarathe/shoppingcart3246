@@ -19,13 +19,16 @@ public class Address {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@Column(nullable = false,unique = true)
+	private Long cartId;
+	
 	@Column(nullable = false)
 	private String fullName;
 	
-	@Column(nullable = false)
+	@Column(nullable = false,unique = true)
 	private String mobileNumber;
 	
-	
+	@Column(nullable = false)
 	private int flatNumber;
 	
 	@Column(nullable = false)
@@ -36,18 +39,17 @@ public class Address {
 	
 	@Column(nullable = false)
 	private String state;
-	
-	
-	@JsonBackReference
-	@ManyToMany(mappedBy = "address",fetch = FetchType.LAZY)
-	private List<Orders> orders;
-	
-	
 
-	public Address(Long id, String fullName, String mobileNumber, int flatNumber, String city, int pincode,
+	public Address() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Address(Long id, Long cartId, String fullName, String mobileNumber, int flatNumber, String city, int pincode,
 			String state) {
 		super();
 		this.id = id;
+		this.cartId = cartId;
 		this.fullName = fullName;
 		this.mobileNumber = mobileNumber;
 		this.flatNumber = flatNumber;
@@ -62,6 +64,14 @@ public class Address {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getCartId() {
+		return cartId;
+	}
+
+	public void setCartId(Long cartId) {
+		this.cartId = cartId;
 	}
 
 	public String getFullName() {
@@ -112,11 +122,7 @@ public class Address {
 		this.state = state;
 	}
 
-	@Override
-	public String toString() {
-		return "Address [customerId=" + id + ", fullName=" + fullName + ", mobileNumber=" + mobileNumber
-				+ ", flatNumber=" + flatNumber + ", city=" + city + ", pincode=" + pincode + ", state=" + state + "]";
-	}
+	
 	
 	
 }

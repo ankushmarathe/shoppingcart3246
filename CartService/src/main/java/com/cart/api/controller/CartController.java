@@ -148,7 +148,7 @@ public class CartController {
 	
 	*/
 	
-	@GetMapping("/{uid}")
+	@GetMapping("/id/{uid}")
 	public Long getCartByUserId(@PathVariable("uid") Long uid )
 	{
 		Cart cart=cartRepository.getByUserId(uid);

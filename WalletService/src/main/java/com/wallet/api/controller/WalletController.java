@@ -200,8 +200,10 @@ public class WalletController {
 		
 		Wallet wallet=walletRepository.getById(wId);
 		
+		if(wallet.isActivate()==0) return -1;
+		
 		long temp1=amount/10;
-		if(wallet.isActivate()==0 || wallet.getBalance()<temp1) return amount;
+		if(wallet.getBalance()<temp1) return amount;
 		
 		// According to price of products wallet money is subtracting from total amount
 		if(amount<500) return amount-temp1;

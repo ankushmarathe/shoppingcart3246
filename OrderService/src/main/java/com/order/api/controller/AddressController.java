@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import com.order.api.repository.AddressRepository;
 import com.order.api.repository.CartRepository;
 import com.order.api.repository.OrderRepository;
 
+@CrossOrigin(origins = {"http://localhost:4200/"})
 @RestController
 public class AddressController {
 	
@@ -26,8 +28,7 @@ public class AddressController {
 	@Autowired
 	private OrderRepository orderRepository;
 	
-	@Autowired
-	private RestTemplate restTemplate;
+	
 	
 	@Autowired
 	private CartRepository cartRepository;
@@ -41,8 +42,9 @@ public class AddressController {
 	@PostMapping("/storeaddress/{cid}")  //Api to Store a new Address
 	public Address storeAddress(@RequestBody Address address,@PathVariable("cid")Long cid) {
 		
+		RestTemplate restTemplate=new RestTemplate();
 		ResponseEntity<com.order.api.model.Cart> temp = restTemplate
-				.getForEntity("http://localhost:1003/cart/"+cid, Cart.class);
+				.getForEntity("http://localhost:1003/cart/getcart/"+cid, Cart.class);
 		
 		Cart cartDb = temp.getBody();
 		address.setCartId((long)cartDb.getId());

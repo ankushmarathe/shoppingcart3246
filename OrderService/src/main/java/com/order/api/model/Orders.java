@@ -42,8 +42,9 @@ public class Orders {
 	private String orderStatus;
 	
 	@Column(nullable = false)
-	private int quantity;
+	private int quantity = 1;
 	
+	@OneToOne
 	private Address address;
 
 	public Orders() {

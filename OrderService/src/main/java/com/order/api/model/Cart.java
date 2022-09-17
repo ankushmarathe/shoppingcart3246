@@ -1,28 +1,40 @@
 package com.order.api.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
+
 
 @Entity
 public class Cart {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)	
 	private Long id;
-	
 	@Column(nullable = false)
-	private double totalPrice;
-	
-//	@OneToOne
-//	private Items items;
+	private Long userId;
 
-	public Cart(Long id, double totalPrice) {
+	private double totalPrice;
+
+	public Cart() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Cart(Long id, Long userId, double totalPrice) {
 		super();
 		this.id = id;
+		this.userId = userId;
 		this.totalPrice = totalPrice;
 	}
 
@@ -34,6 +46,14 @@ public class Cart {
 		this.id = id;
 	}
 
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 	public double getTotalPrice() {
 		return totalPrice;
 	}
@@ -42,11 +62,5 @@ public class Cart {
 		this.totalPrice = totalPrice;
 	}
 
-	@Override
-	public String toString() {
-		return "Cart [id=" + id + ", totalPrice=" + totalPrice + "]";
-	}
-	
-	
-	
+
 }

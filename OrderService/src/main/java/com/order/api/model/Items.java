@@ -1,81 +1,66 @@
 package com.order.api.model;
+import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Items {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long itemId;
+	private Long Id;
+	private Long productId;
+	//private String productName;
 	
-	@Column(nullable = false)
-	private String productName;
+	//private double price;
+	//private int quantity=1;
+	//private int quantity;
+	//@ManyToMany(mappedBy ="items" )
+	//private List<Cart> cart;
 	
-	@Column(nullable = false)
-	private double price;
-	
-	@Column(nullable = false)
-	private int quantity;
-
 	@OneToOne
 	private Cart cart;
-	
-	@OneToOne
-	private Product product;
-	
 
-	public Items(Long itemId, String productName, double price, int quantity) {
+	public Items() {
 		super();
-		this.itemId = itemId;
-		this.productName = productName;
-		this.price = price;
-		this.quantity = quantity;
+		// TODO Auto-generated constructor stub
 	}
 
-	public Long getItemId() {
-		return itemId;
+	public Items(Long id, Long productId, Cart cart) {
+		super();
+		Id = id;
+		this.productId = productId;
+		this.cart = cart;
 	}
 
-	public void setItemId(Long itemId) {
-		this.itemId = itemId;
+	public Long getId() {
+		return Id;
 	}
 
-	public String getProductName() {
-		return productName;
+	public void setId(Long id) {
+		Id = id;
 	}
 
-	public void setProductName(String productName) {
-		this.productName = productName;
+	public Long getProductId() {
+		return productId;
 	}
 
-	public double getPrice() {
-		return price;
+	public void setProductId(Long productId) {
+		this.productId = productId;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	public Cart getCart() {
+		return cart;
 	}
 
-	public int getQuantity() {
-		return quantity;
+	public void setCart(Cart cart) {
+		this.cart = cart;
 	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	@Override
-	public String toString() {
-		return "Items [itemId=" + itemId + ", productName=" + productName + ", price=" + price + ", quantity="
-				+ quantity + "]";
-	}
-	
 	
 	
 }

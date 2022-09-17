@@ -5,113 +5,139 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 @Entity
 public class User {
+
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-     private int userId;
+    private Long userId;
 	@Column(nullable = false)
 	private String username;
-	private String password;
+	private String encrytedPassword;
 	@Column(nullable = false)
-	private String address;
+	private String firstname;
+	@Column(nullable = false)
+	private String lastname;
 	@Column(nullable = false)
 	private String role;
-	
-	private String mobile;
-	
-	private int age;
-	
- @Column(nullable = false)
+	private String mobilenumber;
+	private String gender;
+	@Column(nullable = false)
 	private String email;
-
-public User(int userId, String username, String password,String address, String role, String mobile, int age, String email) {
-	this.userId = userId;
-	this.username = username;
-	this.password=password;
-	this.address = address;
-	this.role = role;
-	this.mobile = mobile;
-	this.age = age;
-	this.email = email;
-}
+	
+	
+	public User() {
+		super();
+	}
 
 
-public String getPassword() {
-	return password;
-}
+	public User(Long userId, String username, String encrytedPassword, String firstname, String lastname, String role,
+			String mobilenumber, String gender, String email) {
+		this.userId = userId;
+		this.username = username;
+		this.encrytedPassword = encrytedPassword;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.role = role;
+		this.mobilenumber = mobilenumber;
+		this.gender = gender;
+		this.email = email;
+	}
 
 
-public void setPassword(String password) {
-	this.password = password;
-}
+	public Long getUserId() {
+		return userId;
+	}
 
 
-public User() {
-	super();
-	// TODO Auto-generated constructor stub
-}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
 
+	public String getUsername() {
+		return username;
+	}
 
 
-public int getUserId() {
-	return userId;
-}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-public void setUserId(int userId) {
-	this.userId = userId;
-}
 
-public String getusername() {
-	return username;
-}
+	public String getencrytedPassword() {
+		return encrytedPassword;
+	}
 
-public void setusername(String username) {
-	this.username = username;
-}
 
-public String getAddress() {
-	return address;
-}
+	public void setencrytedPassword(String encrytedPassword) {
+		this.encrytedPassword = encrytedPassword;
+	}
 
-public void setAddress(String address) {
-	this.address = address;
-}
 
-public String getRole() {
-	return role;
-}
+	public String getFirstname() {
+		return firstname;
+	}
 
-public void setRole(String role) {
-	this.role = role;
-}
 
-public String getMobile() {
-	return mobile;
-}
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
 
-public void setMobile(String mobile) {
-	this.mobile = mobile;
-}
 
-public int getAge() {
-	return age;
-}
+	public String getLastname() {
+		return lastname;
+	}
 
-public void setAge(int age) {
-	this.age = age;
-}
 
-public String getEmail() {
-	return email;
-}
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
 
-public void setEmail(String email) {
-	this.email = email;
-}
+
+	public String getRole() {
+		return role;
+	}
+
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+
+	public String getMobilenumber() {
+		return mobilenumber;
+	}
+
+
+	public void setMobilenumber(String mobilenumber) {
+		this.mobilenumber = mobilenumber;
+	}
+
+
+	public String getGender() {
+		return gender;
+	}
+
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 
 	
-
-
+	
 }
+

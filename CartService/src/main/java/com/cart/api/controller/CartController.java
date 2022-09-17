@@ -110,19 +110,13 @@ public class CartController {
 	
 	//post product in cart using userId
 	
-	@PostMapping("/addcart/{uId}")
-	public Cart postCart(@RequestBody Cart cart, @PathVariable("uId") Long uId) {
+	@GetMapping("/addcart/{uId}")
+	public Cart postCart( @PathVariable("uId") Long uId) {
 		
-		RestTemplate restTemplate=new RestTemplate();
-		
-		User user=restTemplate.getForObject("http://localhost:1000/user/"+uId, User.class);
-		
-		if(user!=null) {
-			cart.setUserId(uId);
-			return cartRepository.save(cart);
-		}
-		
-		return new Cart();
+      Cart cart=new Cart();
+      cart.setUserId(uId);
+		return cartRepository.save(cart);
+		//return new Cart();
 	}
 	
 	//delete waleet by userid
@@ -161,6 +155,11 @@ public class CartController {
 		return cart.getId();
 	}
 	
+	@GetMapping("/getcart/{cid}")
+	public Cart getCartById(@PathVariable("cid")Long cid)
+	{
+		return cartRepository.getReferenceById(cid);
+	}
 	/*//sms service
 	@Autowired
 	SmsService smsService;

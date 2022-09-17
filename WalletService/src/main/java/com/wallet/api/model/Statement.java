@@ -34,6 +34,7 @@ public class Statement {
 	private double paid;
 	@Temporal(TemporalType.DATE)
 	private Date sDate;
+	private  String type;
 	
 	@OneToOne
 	private Wallet wallet;
@@ -45,15 +46,20 @@ public class Statement {
 		super();
 	}
 
-	public Statement(Long id, long userId, String orderID, double paid, Date sDate, Wallet wallet) {
+	
+
+	public Statement(Long id, long userId, String orderID, double paid, Date sDate, String type, Wallet wallet) {
 		super();
 		this.id = id;
 		this.userId = userId;
 		this.orderID = orderID;
 		this.paid = paid;
 		this.sDate = sDate;
+		this.type = type;
 		this.wallet = wallet;
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -101,6 +107,18 @@ public class Statement {
 
 	public void setWallet(Wallet wallet) {
 		this.wallet = wallet;
+	}
+
+
+
+	public String getType() {
+		return type;
+	}
+
+
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 

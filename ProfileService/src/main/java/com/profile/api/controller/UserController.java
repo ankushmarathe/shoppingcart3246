@@ -56,12 +56,13 @@ public class UserController {
 	 public User adduser(@RequestBody User user) { 
 		
 	    user.setRole("user");
+		user=userRepository.save(user);
 	    
 	    restTemplate.getForObject("http://localhost:1000/wallet/saveWallet/"+user.getUserId(), com.profile.api.model.Wallet.class);
 	    restTemplate.getForObject("http://localhost:1000/cart/addcart/"+user.getUserId(), com.profile.api.model.Cart.class);
 		
 	    
-	  return userRepository.save(user); }
+	  return user ; }
 	  
 	  @PostMapping("/admin")
 		 public User addadmin(@RequestBody User user) { 

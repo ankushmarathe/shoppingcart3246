@@ -248,9 +248,57 @@ public class WalletController {
 		dt=Date.from(ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 		
 		statement.setsDate(dt);
+		statement.setType("Withdraw");
 		statementRepository.save(statement);
 		
 		
 		return order.toString();
 	}
+	
+	
+	//payment gateway api
+		@ApiOperation(value="Api for Payment",
+				response=Wallet.class)
+		@PostMapping("/pay/wallet/{wid}")
+		@ResponseBody
+		public String paymoneyinwallet(@RequestBody Map<String, Object> data, @PathVariable("wid") Long wid) throws Exception {
+			System.out.println ("--------------------------------------------------------------------");
+
+			int amt=Integer.parseInt(data.get("amount").toString ());
+
+
+			// creating order object to pass it to razorpay api and get the orderId  
+			RazorpayClient razorpayClient = new RazorpayClient(secretID, secretKey); 
+			JSONObject options = new JSONObject(); 
+			options.put("amount", amt*100); 
+			options.put("currency", "INR"); 
+			options.put("receipt", "txn_123456"); 
+			Order order = razorpayClient.orders.create(options);
+			System.out.println (order) ;
+			
+			
+		
+			Wallet wallet=walletRepository.getById(wid);
+			
+			wallet.setBalance(wallet.getBalance()+amt);
+			walletRepository.save(wallet);			
+			
+			Statement statement=new Statement();
+			
+			statement.setUserId(wallet.getUserId());
+			statement.setOrderID("");
+			statement.setPaid(amt);
+			statement.setWallet(wallet);
+			
+			LocalDate ld=LocalDate.now();
+			Date dt=new Date();
+			dt=Date.from(ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+			
+			statement.setsDate(dt);
+			statement.setType("Deposite");
+			statementRepository.save(statement);
+			
+			
+			return order.toString();
+		}
 }

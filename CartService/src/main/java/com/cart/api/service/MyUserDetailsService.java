@@ -95,7 +95,7 @@ public class MyUserDetailsService implements UserDetailsService{
 		 SimpleGrantedAuthority sga=new SimpleGrantedAuthority(userDB.getRole());
 		 list.add(sga);
 		 
-		 User springuser=new User(userDB.getusername(),userDB.getPassword(),list);
+		 User springuser=new User(userDB.getUsername(),userDB.getencrytedPassword(),list);
 		return  springuser;
 	}
 

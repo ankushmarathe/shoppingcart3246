@@ -66,9 +66,9 @@ public class WalletController {
 		return walletRepository.findAll();
 	}
 	
-	@GetMapping("/getBalance/{uid}")
-	public Long getbalance(@PathVariable("uid") Long uId) {
-		Wallet wallet=walletRepository.getByUserId(uId);
+	@GetMapping("/getBalance/{wid}")
+	public Long getbalance(@PathVariable("wid") Long wId) {
+		Wallet wallet=walletRepository.getById(wId);
 		return (long)wallet.getBalance();
 	}
 	
@@ -196,20 +196,43 @@ public class WalletController {
 			notes = "provide an price and Fetch the wallet balance",
 			response=Wallet.class)
 	@GetMapping("/getWalletMoney/{wId}/{amount}")// subtracting wallet money from total
-	public long getWalletMoney(@PathVariable("amount") Long amount, @PathVariable("wId") Long wId) {
-		
+	public int getWalletMoney(@PathVariable("amount") Long amount, @PathVariable("wId") Long wId) {
+		int amt=Integer.parseInt(amount.toString ());
+
 		Wallet wallet=walletRepository.getById(wId);
 		
 		if(wallet.isActivate()==0) return -1;
 		
-		long temp1=amount/10;
-		if(wallet.getBalance()<temp1) return amount;
+		int temp1=amt/10;
+		if(wallet.getBalance()<100) return amt;
 		
 		// According to price of products wallet money is subtracting from total amount
-		if(amount<500) return amount-temp1;
-		if(amount<1500) return amount-(temp1+(temp1/2));
-		if(amount<4000) return amount-(2*temp1);
-		return amount-(3*temp1);
+		if(amount<500) {
+			amt=amt-temp1;
+			wallet.setBalance(wallet.getBalance()-temp1);
+			walletRepository.save(wallet);
+			return amt;
+		}else {
+			if(amount<1500) {
+				amt=amt-(temp1+(temp1/2));
+				wallet.setBalance(wallet.getBalance()-(temp1+(temp1/2)));
+				walletRepository.save(wallet);
+				return amt;
+			}else {
+				if(amount<4000) {
+					amt=amt-(2*temp1);
+					wallet.setBalance(wallet.getBalance()-(2*temp1));
+					walletRepository.save(wallet);
+					return amt;
+				}else {
+					amt=amt-(3*temp1);
+					wallet.setBalance(wallet.getBalance()-(3*temp1));
+					walletRepository.save(wallet);
+					return amt;
+				}
+			}
+		}
+		
 	}
 	
 	
@@ -220,8 +243,7 @@ public class WalletController {
 	@PostMapping("/pay/{wid}")
 	@ResponseBody
 	public String paymoneyyy(@RequestBody Map<String, Object> data, @PathVariable("wid") Long wid) throws Exception {
-		System.out.println ("--------------------------------------------------------------------");
-
+		
 		int amt=Integer.parseInt(data.get("amount").toString ());
 
 
@@ -232,18 +254,15 @@ public class WalletController {
 		options.put("currency", "INR"); 
 		options.put("receipt", "txn_123456"); 
 		Order order = razorpayClient.orders.create(options);
-		System.out.println (order) ;
 		
-		
-	
 		Wallet wallet=walletRepository.getById(wid);
 		
 		Statement statement=new Statement();
 		
 		statement.setUserId(wallet.getUserId());
-		statement.setOrderID("");
 		statement.setPaid(amt);
 		statement.setWallet(wallet);
+		statement.setOrderID(order.get("id").toString());
 		
 		LocalDate ld=LocalDate.now();
 		Date dt=new Date();
@@ -264,8 +283,7 @@ public class WalletController {
 		@PostMapping("/pay/wallet/{wid}")
 		@ResponseBody
 		public String paymoneyinwallet(@RequestBody Map<String, Object> data, @PathVariable("wid") Long wid) throws Exception {
-			System.out.println ("--------------------------------------------------------------------");
-
+			
 			int amt=Integer.parseInt(data.get("amount").toString ());
 
 
@@ -276,8 +294,43 @@ public class WalletController {
 			options.put("currency", "INR"); 
 			options.put("receipt", "txn_123456"); 
 			Order order = razorpayClient.orders.create(options);
-			System.out.println (order) ;
 			
+		
+			Wallet wallet=walletRepository.getById(wid);
+			
+			wallet.setBalance(wallet.getBalance()+amt);
+			walletRepository.save(wallet);			
+			
+			Statement statement=new Statement();
+			
+			statement.setUserId(wallet.getUserId());
+			statement.setPaid(amt);
+			statement.setWallet(wallet);
+			statement.setOrderID(order.get("id").toString());
+			
+			LocalDate ld=LocalDate.now();
+			Date dt=new Date();
+			dt=Date.from(ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+			
+			statement.setsDate(dt);
+			statement.setType("Deposite");
+			statementRepository.save(statement);
+			
+			
+			return order.toString();
+		}
+		
+		@GetMapping("/reward/wallet/{wid}/{amount}")
+		public void getReward(@PathVariable("amount") Long amount, @PathVariable("wid") Long wid) throws Exception {
+			int amt=Integer.parseInt(amount.toString());
+			
+			// creating order object to pass it to razorpay api and get the orderId  
+			RazorpayClient razorpayClient = new RazorpayClient(secretID, secretKey); 
+			JSONObject options = new JSONObject(); 
+			options.put("amount", amt*100); 
+			options.put("currency", "INR"); 
+			options.put("receipt", "txn_123456"); 
+			Order order = razorpayClient.orders.create(options);
 			
 		
 			Wallet wallet=walletRepository.getById(wid);
@@ -291,16 +344,15 @@ public class WalletController {
 			statement.setOrderID("");
 			statement.setPaid(amt);
 			statement.setWallet(wallet);
+			statement.setOrderID(order.get("id").toString());
 			
 			LocalDate ld=LocalDate.now();
 			Date dt=new Date();
 			dt=Date.from(ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 			
 			statement.setsDate(dt);
-			statement.setType("Deposite");
+			statement.setType("Reward Generated");
 			statementRepository.save(statement);
 			
-			
-			return order.toString();
 		}
 }

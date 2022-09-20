@@ -71,6 +71,11 @@ public class UserController {
 		  return userRepository.save(user); 
 		  }
 	
+	  @GetMapping("/getRightUser/{u}/{p}")
+	  public User getUserrrr(@PathVariable("u") String u,@PathVariable("p") String p) {
+		  User user=userRepository.getByUandP(u, p);
+		  return user;
+	  }
 
 	// get method to get all users list
 	@GetMapping("/user1")

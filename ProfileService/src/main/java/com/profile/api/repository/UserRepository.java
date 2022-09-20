@@ -9,6 +9,8 @@ import com.profile.api.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	User findByUsername(String username);
+@Query("select u from User u where u.username=?1 and u.encrytedPassword=?2")
+	User getByUandP(String u, String p);
 
 
 	//@Query("select u from User u where u.mobilenumber=?1")

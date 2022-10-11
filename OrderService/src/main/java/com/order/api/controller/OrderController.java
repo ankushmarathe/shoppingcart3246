@@ -94,7 +94,7 @@ public class OrderController {
 		
 		// calling profile service to check if user is present
 		ResponseEntity<User> temp=restTemplate
-				.getForEntity("http://localhost:1001/user/user/"+ uid, User.class);
+				.getForEntity("http://localhost:1001/user/users"+ uid, User.class);
 		User userDB=temp.getBody();
 		
 		
@@ -102,6 +102,23 @@ public class OrderController {
 		return orderlist;
 		
 	}
+	
+	@GetMapping("/order/cart/{cid}") 	//Api to get Orders according to UserId
+	public double getOrderByCartId(@PathVariable("cid") Long cid) throws Exception{
+		
+		RestTemplate restTemplate =	new RestTemplate();
+		
+		// calling profile service to check if user is present
+		ResponseEntity<Cart> temp=restTemplate
+				.getForEntity("http://localhost:1003/cart/getcart/"+ cid, Cart.class);
+		Cart cart=temp.getBody();
+		
+		System.out.print(cart);
+		
+		return cart.getTotalPrice();
+		
+	}
+	
 	
 }
 
